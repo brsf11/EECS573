@@ -282,6 +282,9 @@ typedef struct packed {
  * Data exchanged from the EX to the MEM stage
  */
 typedef struct packed {
+    //Cassie
+    logic             ex_memory_access; // If this instr is accessing memory
+
     logic [`XLEN-1:0] alu_result;
     logic [`XLEN-1:0] NPC;
 

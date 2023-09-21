@@ -121,6 +121,12 @@ module pipeline (
 
     // synopsys sync_set_reset "reset"
     always_ff @(posedge clock) begin
+        if(ex_packet.ex_memory_access) begin
+	    next_if_valid <= 0;
+	end else begin
+            next_if_valid <= 1;
+ 	end
+ 	/*
         if (reset) begin
             // start valid, other stages (ID,EX,MEM,WB) start as invalid
             next_if_valid <= 1;
@@ -128,6 +134,7 @@ module pipeline (
             // valid bit will cycle through the pipeline and come back from the wb stage
             next_if_valid <= mem_wb_reg.valid;
         end
+	*/
     end
 
     //////////////////////////////////////////////////
