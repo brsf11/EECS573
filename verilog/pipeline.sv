@@ -61,13 +61,13 @@ module pipeline (
 
     // Outputs from IF-Stage and IF/ID Pipeline Register
     logic [`XLEN-1:0] proc2Imem_addr;
-    IF_ID_PACKET if_packet, if_id_reg;
+    IF_ID_PACKET if_packet, if_packet_nop, if_id_reg;
 
     // Outputs from ID stage and ID/EX Pipeline Register
-    ID_EX_PACKET id_packet, id_ex_reg;
+    ID_EX_PACKET id_packet, id_packet_nop, id_ex_reg;
 
     // Outputs from EX-Stage and EX/MEM Pipeline Register
-    EX_MEM_PACKET ex_packet, ex_mem_reg;
+    EX_MEM_PACKET ex_packet, ex_packet_nop, ex_mem_reg;
 
     // Outputs from MEM-Stage and MEM/WB Pipeline Register
     MEM_WB_PACKET mem_packet, mem_wb_reg;
@@ -141,7 +141,7 @@ module pipeline (
     //                                              //
     //                  IF-Stage                    //
     //                                              //
-    //////////////////////////////////////////////////
+   /////////////////////////////////////////////////
 
     stage_if stage_if_0 (
         // Inputs
@@ -170,6 +170,14 @@ module pipeline (
 
     assign if_id_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
+
+    //Cassie
+    always_comb begin
+       if_packet_nop = if_packet;
+       if_packet_nop.inst  = `NOP;
+       if_packet_nop.valid = 0;
+    end
+
     always_ff @(posedge clock) begin
         if (reset) begin
             if_id_reg.inst  <= `NOP;
@@ -177,7 +185,7 @@ module pipeline (
             if_id_reg.NPC   <= 0;
             if_id_reg.PC    <= 0;
         end else if (if_id_enable) begin
-            if_id_reg <= if_packet;
+            if_id_reg <= ex_mem_reg.take_branch ? if_packet_nop : if_packet;
         end
     end
 
@@ -191,7 +199,7 @@ module pipeline (
     //                  ID-Stage                    //
     //                                              //
     //////////////////////////////////////////////////
-
+ 
     stage_id stage_id_0 (
         // Inputs
         .clock (clock),
@@ -210,6 +218,13 @@ module pipeline (
     //            ID/EX Pipeline Register           //
     //                                              //
     //////////////////////////////////////////////////
+
+    //Cassie
+    always_comb begin
+       id_packet_nop       = id_packet;
+       id_packet_nop.inst  = `NOP;
+       id_packet_nop.valid = 0;
+    end
 
     assign id_ex_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
@@ -235,7 +250,7 @@ module pipeline (
                 1'b0  // valid
             };
         end else if (id_ex_enable) begin
-            id_ex_reg <= id_packet;
+            id_ex_reg <= ex_mem_reg.take_branch ? id_packet_nop : id_packet;
         end
     end
 
@@ -249,7 +264,6 @@ module pipeline (
     //                  EX-Stage                    //
     //                                              //
     //////////////////////////////////////////////////
-
     stage_ex stage_ex_0 (
         // Input
         .id_ex_reg (id_ex_reg),
@@ -263,7 +277,11 @@ module pipeline (
     //           EX/MEM Pipeline Register           //
     //                                              //
     //////////////////////////////////////////////////
-
+    
+    always_comb begin
+       ex_packet_nop = 'b0;
+    end
+    
     assign ex_mem_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
     always_ff @(posedge clock) begin
@@ -272,7 +290,8 @@ module pipeline (
             ex_mem_reg      <= 0;    // the defaults can all be zero!
         end else if (ex_mem_enable) begin
             ex_mem_inst_dbg <= id_ex_inst_dbg; // debug output, just forwarded from ID
-            ex_mem_reg      <= ex_packet;
+            ex_mem_reg      <= ex_mem_reg.take_branch ? ex_packet_nop : ex_packet;
+            //ex_mem_reg      <= ex_packet;
         end
     end
 
