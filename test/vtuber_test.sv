@@ -149,8 +149,18 @@ module testbench;
         // Call to initialize visual debugger
         // *Note that after this, all stdout output goes to visual debugger*
         // each argument is number of registers/signals for the group
-        // (IF, IF/ID, ID, ID/EX, EX, EX/MEM, MEM, MEM/WB, WB, Misc)
-        initcurses(6,4,13,17,4,14,5,9,3,2);
+        initcurses(
+            5,  // IF
+            4,  // IF/ID
+            13, // ID
+            17, // ID/EX
+            4,  // EX
+            14, // EX/MEM
+            5,  // MEM
+            9,  // MEM/WB
+            3,  // WB
+            2   // Miscellaneous
+        );
 
         // Pulse the reset signal
         reset = 1'b1;
@@ -205,7 +215,7 @@ module testbench;
         // Dump register file contents
         $write("a");
         for(int i = 0; i < 32; i=i+1) begin
-            $write("%h", pipeline_0.stage_id_0.regf_0.registers[i]);
+            $write("%h", pipeline_0.stage_id_0.regfile_0.registers[i]);
         end
         $display("");
 
@@ -225,17 +235,17 @@ module testbench;
         // f: IF   d: ID   e: EX   m: MEM    w: WB  v: misc. reg
         // g: IF/ID   h: ID/EX  i: EX/MEM  j: MEM/WB
 
-        // IF signals (6) - prefix 'f'
+        // IF signals (5) - prefix 'f'
         $display("fNPC 8:%h",         pipeline_0.if_packet.NPC);
-        $display("fIR 8:%h",          pipeline_0.if_packet.inst);
+        $display("finst 8:%h",        pipeline_0.if_packet.inst);
         $display("fImem_addr 8:%h",   pipeline_0.stage_if_0.proc2Imem_addr);
         $display("fPC_reg 8:%h",      pipeline_0.stage_if_0.PC_reg);
-        $display("fif_valid 1:%h",    pipeline_0.if_packet.valid);
+        $display("fvalid 1:%h",       pipeline_0.if_packet.valid);
 
         // IF/ID signals (4) - prefix 'g'
         $display("genable 1:%h",      pipeline_0.if_id_enable);
         $display("gNPC 16:%h",        pipeline_0.if_id_reg.NPC);
-        $display("gIR 8:%h",          pipeline_0.if_id_reg.inst);
+        $display("ginst 8:%h",        pipeline_0.if_id_reg.inst);
         $display("gvalid 1:%h",       pipeline_0.if_id_reg.valid);
 
         // ID signals (13) - prefix 'd'
@@ -256,7 +266,7 @@ module testbench;
         // ID/EX signals (17) - prefix 'h'
         $display("henable 1:%h",      pipeline_0.id_ex_enable);
         $display("hNPC 16:%h",        pipeline_0.id_ex_reg.NPC);
-        $display("hIR 8:%h",          pipeline_0.id_ex_reg.inst);
+        $display("hinst 8:%h",        pipeline_0.id_ex_reg.inst);
         $display("hrs1 8:%h",         pipeline_0.id_ex_reg.rs1_value);
         $display("hrs2 8:%h",         pipeline_0.id_ex_reg.rs2_value);
         $display("hdest_reg 2:%h",    pipeline_0.id_ex_reg.dest_reg_idx);
@@ -281,7 +291,7 @@ module testbench;
         // EX/MEM signals (14) - prefix 'i'
         $display("ienable 1:%h",      pipeline_0.ex_mem_enable);
         $display("iNPC 8:%h",         pipeline_0.ex_mem_reg.NPC);
-        $display("iIR 8:%h",          pipeline_0.ex_mem_IR);
+        $display("iinst 8:%h",        pipeline_0.ex_mem_inst_dbg);
         $display("irs2 8:%h",         pipeline_0.ex_mem_reg.rs2_value);
         $display("ialu_result 8:%h",  pipeline_0.ex_mem_reg.alu_result);
         $display("idest_reg 2:%h",    pipeline_0.ex_mem_reg.dest_reg_idx);
@@ -297,15 +307,15 @@ module testbench;
 
         // MEM signals (5) - prefix 'm'
         $display("mmem_data 16:%h",   pipeline_0.mem2proc_data);
-        $display("mresult_out 8:%h",  pipeline_0.mem_result_out);
+        $display("mmem_result 8:%h",  pipeline_0.mem_wb_reg.result);
         $display("m2Dmem_data 16:%h", pipeline_0.proc2mem_data);
         $display("m2Dmem_addr 8:%h",  pipeline_0.proc2Dmem_addr);
         $display("m2Dmem_cmd 1:%h",   pipeline_0.proc2Dmem_command);
 
         // MEM/WB signals (9) - prefix 'j'
         $display("jenable 1:%h",      pipeline_0.mem_wb_enable);
-        $display("jNPC 8:%h",         pipeline_0.mem_wb_NPC);
-        $display("jIR 8:%h",          pipeline_0.mem_wb_IR);
+        $display("jNPC 8:%h",         pipeline_0.mem_wb_NPC_dbg);
+        $display("jinst 8:%h",        pipeline_0.mem_wb_inst_dbg);
         $display("jresult 8:%h",      pipeline_0.mem_wb_reg.result);
         $display("jdest_reg 2:%h",    pipeline_0.mem_wb_reg.dest_reg_idx);
         $display("jtake_branch 1:%h", pipeline_0.mem_wb_reg.take_branch);
