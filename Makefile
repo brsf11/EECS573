@@ -255,6 +255,8 @@ DUMP_PROGRAMS = $(ASSEMBLY:.c=) $(C_CODE:.c=.debug)
 # 'make <my_program>.dump' will create both files at once!
 ./%.dump: programs/%.dump_x programs/%.dump_abi ;
 .PHONY: ./%.dump
+# Tell tell Make to treat the .dump_* files as "precious" and not to rm them as intermediaries to %.dump
+.PRECIOUS: %.dump_x %.dump_abi
 
 # use the numberic x0-x31 register names
 %.dump_x: %.elf
@@ -322,8 +324,8 @@ $(OUTPUTS:=.syn.out): output/%.syn.out: programs/%.mem syn_simv | output
 %.wb %.ppln: %.out ;
 
 # run all programs in one command (use 'make -j' to run multithreaded)
-simulate_all: simv compile_all $(OUTPUTS)
-simulate_all_syn: syn_simv compile_all $(OUTPUTS)
+simulate_all: simv compile_all $(OUTPUTS:=.out)
+simulate_all_syn: syn_simv compile_all $(OUTPUTS:=.syn.out)
 .PHONY: simulate_all simulate_all_syn
 
 ###################
