@@ -255,6 +255,8 @@ DUMP_PROGRAMS = $(ASSEMBLY:.c=) $(C_CODE:.c=.debug)
 # 'make <my_program>.dump' will create both files at once!
 ./%.dump: programs/%.dump_x programs/%.dump_abi ;
 .PHONY: ./%.dump
+# Tell tell Make to treat the .dump_* files as "precious" and not to rm them as intermediaries to %.dump
+.PRECIOUS: %.dump_x %.dump_abi
 
 # use the numberic x0-x31 register names
 %.dump_x: %.elf
