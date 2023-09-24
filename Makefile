@@ -370,6 +370,7 @@ vis_simv: $(HEADERS) $(VTUBER) $(SOURCES)
 
 %.vis: programs/%.mem vis_simv
 	./vis_simv +MEMORY=$<
+	@$(call PRINT_COLOR, 6, Fullscreen your terminal for the best VTUBER experience!)
 .PHONY: %.vis
 
 #####################
