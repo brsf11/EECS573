@@ -322,8 +322,8 @@ $(OUTPUTS:=.syn.out): output/%.syn.out: programs/%.mem syn_simv | output
 %.wb %.ppln: %.out ;
 
 # run all programs in one command (use 'make -j' to run multithreaded)
-simulate_all: simv compile_all $(OUTPUTS)
-simulate_all_syn: syn_simv compile_all $(OUTPUTS)
+simulate_all: simv compile_all $(OUTPUTS:=.out)
+simulate_all_syn: syn_simv compile_all $(OUTPUTS:=.syn.out)
 .PHONY: simulate_all simulate_all_syn
 
 ###################
