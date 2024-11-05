@@ -112,8 +112,6 @@ module stage_ex (
     // Break out the signed/unsigned bit and memory read/write size
     assign ex_packet.rd_unsigned  = id_ex_reg.inst.r.funct3[2]; // 1 if unsigned, 0 if signed
     assign ex_packet.mem_size     = MEM_SIZE'(id_ex_reg.inst.r.funct3[1:0]); 
-    //Cassie
-    assign ex_packet.ex_memory_access = (id_ex_reg.rd_mem)||(id_ex_reg.wr_mem);
 
     // ultimate "take branch" signal:
     // unconditional, or conditional and the condition is true

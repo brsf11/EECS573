@@ -147,7 +147,20 @@ SOURCES = verilog/pipeline.sv \
           verilog/stage_id.sv \
           verilog/stage_ex.sv \
           verilog/stage_mem.sv \
-          verilog/stage_wb.sv
+          verilog/stage_wb.sv \
+          verilog/steer.sv \
+          verilog/CacheCore_DM.sv \
+          verilog/onehot2bin.sv \
+          verilog/DcacheCore.sv \
+          verilog/VictimCache.sv \
+          verilog/FACacheline.sv \
+          verilog/PLRU4.sv \
+          verilog/lru2idx4.sv \
+          verilog/IcacheCore.sv \
+          verilog/unsteer.sv \
+          verilog/StreamBuf.sv \
+          verilog/icache.sv \
+          verilog/Dcache_blocking.sv
 
 SYNTH_FILES = synth/pipeline.vg
 

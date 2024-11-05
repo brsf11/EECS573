@@ -209,9 +209,6 @@ module stage_id (
     output ID_EX_PACKET id_packet
 );
 
-    logic reg_read_out_1;
-    logic reg_read_out_2;
-
     assign id_packet.inst = if_id_reg.inst;
     assign id_packet.PC   = if_id_reg.PC;
     assign id_packet.NPC  = if_id_reg.NPC;
@@ -234,17 +231,9 @@ module stage_id (
         .write_idx  (wb_regfile_idx),
         .write_data (wb_regfile_data),
 
-        //Cassie
-        //.read_out_1 (id_packet.rs1_value),
-        //.read_out_2 (id_packet.rs2_value)
-        .read_out_1 (reg_read_out_1),
-        .read_out_2 (reg_read_out_2)
-
+        .read_out_1 (id_packet.rs1_value),
+        .read_out_2 (id_packet.rs2_value)
     );
-
-    //Cassie
-    assign id_packet.rs1_value = (wb_regfile_en&&(wb_regfile_idx==if_id_reg.inst.r.rs1)) ? wb_regfile_data : reg_read_out_1;
-    assign id_packet.rs2_value = (wb_regfile_en&&(wb_regfile_idx==if_id_reg.inst.r.rs2)) ? wb_regfile_data : reg_read_out_2;
 
     // Instantiate the instruction decoder
     decoder decoder_0 (

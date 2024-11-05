@@ -49,44 +49,7 @@ module pipeline (
     output logic [31:0]      mem_wb_inst_dbg,
     output logic             mem_wb_valid_dbg
 );
-    //Cassie
-    //Dcache dbg
-    logic [32+3:0][64-1:0]                                          dbg_cache_mem;
-    logic [32+3:0][13-1:0]                                          dbg_cache_addr;
-    logic [32+3:0]                                                  dbg_cache_valid;
-    logic [32+3:0]                                                  dbg_cache_dirty;
 
-    logic [3:0]  MEM_DCACHE_response;
-    logic [1:0]  DCACHE_MEM_command;
-    logic [31:0] DCACHE_MEM_addr;
-    logic [63:0] DCACHE_MEM_data;
-    
-    logic                           [`XLEN-1:0]   FETCH_ICACHE_instr_fetch_pc;
-    logic                           [`XLEN-1:0]   ICACHE_FETCH_instr;
-    logic                                         ICACHE_FETCH_instr_vld;
-    //ICACHE <-> MEM
-    logic [3:0]  MEM_ICACHE_response;
-    logic [63:0] MEM_ICACHE_data;
-    logic [3:0]  MEM_ICACHE_tag;
-    logic [1:0]  ICACHE_MEM_command;
-    logic [31:0] ICACHE_MEM_addr;
-
-    //load <-> D$                      
-    logic [3:0]                                                 DCACHE_LOAD_load_cache2proc_response;
-    logic [31:0]                                                DCACHE_LOAD_load_cache2proc_data;
-    logic [3:0]                                                 DCACHE_LOAD_load_cache2proc_tag; //unused
-    logic                                                       LOAD_DCACHE_load_proc2cache_load;
-    logic [31:0]                                                LOAD_DCACHE_load_proc2cache_addr;  
-    MEM_SIZE                                                    LOAD_DCACHE_load_proc2cache_size; 
-    //store <-> D$ store ports
-    logic                                                       DCACHE_STORE_store_cache2proc_response;
-    logic                                                       STORE_DCACHE_store_proc2cache_store;
-    logic [31:0]                                                STORE_DCACHE_store_proc2cache_addr;
-    logic [31:0]                                                STORE_DCACHE_store_proc2cache_data;
-    MEM_SIZE                                                    STORE_DCACHE_store_proc2cache_size;
-
-    logic          stall;
-    
     //////////////////////////////////////////////////
     //                                              //
     //                Pipeline Wires                //
@@ -107,12 +70,12 @@ module pipeline (
     EX_MEM_PACKET ex_packet, ex_packet_nop, ex_mem_reg;
 
     // Outputs from MEM-Stage and MEM/WB Pipeline Register
-    MEM_WB_PACKET mem_packet, mem_wb_reg, mem_packet_nop;
+    MEM_WB_PACKET mem_packet, mem_wb_reg;
 
     // Outputs from MEM-Stage to memory
     logic [`XLEN-1:0] proc2Dmem_addr;
     logic [`XLEN-1:0] proc2Dmem_data;
-    logic [1:0]       proc2Dmem_command; //This is replace with DCACHE_MEM_command
+    logic [1:0]       proc2Dmem_command;
     MEM_SIZE          proc2Dmem_size;
 
     // Outputs from WB-Stage (These loop back to the register file in ID)
@@ -120,7 +83,7 @@ module pipeline (
     logic [4:0]       wb_regfile_idx;
     logic [`XLEN-1:0] wb_regfile_data;
 
-   
+    //Cassie
     logic             wx_fwd_rs1;
     logic	      wx_fwd_rs2;
 
@@ -166,24 +129,17 @@ module pipeline (
     // but there will be a 100ns latency in project 4
 
     always_comb begin
-        MEM_ICACHE_response        = 'b0;
-        MEM_DCACHE_response        = 'b0;
-
-        if (DCACHE_MEM_command != BUS_NONE) begin // read or write DATA from memory
-            proc2mem_command = DCACHE_MEM_command;
-            proc2mem_addr    = DCACHE_MEM_addr;
-            //proc2mem_size    = proc2Dmem_size;  //Cassie: size is not sent to mem in P4?
-            MEM_DCACHE_response           = mem2proc_response;  
+        if (proc2Dmem_command != BUS_NONE) begin // read or write DATA from memory
+            proc2mem_command = proc2Dmem_command;
+            proc2mem_addr    = proc2Dmem_addr;
+            proc2mem_size    = proc2Dmem_size;  // size is never DOUBLE in project 3
         end else begin                          // read an INSTRUCTION from memory
-            proc2mem_command = ICACHE_MEM_command;
-            proc2mem_addr    = ICACHE_MEM_addr;
-            //proc2mem_size    = DOUBLE;          // instructions load a full memory line (64 bits)
-            MEM_ICACHE_response           = mem2proc_response;            
+            proc2mem_command = BUS_LOAD;
+            proc2mem_addr    = proc2Imem_addr;
+            proc2mem_size    = DOUBLE;          // instructions load a full memory line (64 bits)
         end
-        proc2mem_data = {32'b0, DCACHE_MEM_data};
+        proc2mem_data = {32'b0, proc2Dmem_data};
     end
-
-    assign stall = (LOAD_DCACHE_load_proc2cache_load && DCACHE_LOAD_load_cache2proc_response==0) || (STORE_DCACHE_store_proc2cache_store && DCACHE_STORE_store_cache2proc_response==0); 
 
     //////////////////////////////////////////////////
     //                                              //
@@ -234,21 +190,20 @@ module pipeline (
     //                  IF-Stage                    //
     //                                              //
    /////////////////////////////////////////////////
-   
 
     stage_if stage_if_0 (
         // Inputs
         .clock (clock),
         .reset (reset),
         //.if_valid       (next_if_valid),
-        .if_valid       ((ICACHE_FETCH_instr_vld)&&(!ld_to_use_stall)&&(!stall)),
+        .if_valid       ((proc2Dmem_command==BUS_NONE)&&(!ld_to_use_stall)),
         .take_branch    (ex_mem_reg.take_branch),
         .branch_target  (ex_mem_reg.alu_result),
-        .Imem2proc_data (ICACHE_FETCH_instr),
+        .Imem2proc_data (mem2proc_data),
 
         // Outputs
         .if_packet      (if_packet),
-        .proc2Imem_addr (FETCH_ICACHE_instr_fetch_pc)
+        .proc2Imem_addr (proc2Imem_addr)
     );
 
     // debug outputs
@@ -256,30 +211,16 @@ module pipeline (
     assign if_inst_dbg  = if_packet.inst;
     assign if_valid_dbg = if_packet.valid;
 
-    //Cassie
-    icache icache(
-        .clk                                (clock),
-        .rst                                (reset),
-
-        .instr_fetch_pc_i                   (FETCH_ICACHE_instr_fetch_pc),
-        .instr_o                            (ICACHE_FETCH_instr),
-        .instr_vld_o                        (ICACHE_FETCH_instr_vld),
-        .mem2cache_response                 (MEM_ICACHE_response), //Cassie: does icache know when the data input is valid?
-        .mem2cache_data                     (mem2proc_data),
-        .mem2cache_tag                      (mem2proc_tag),
-        .cache2mem_command                  (ICACHE_MEM_command),
-        .cache2mem_addr                     (ICACHE_MEM_addr)
-    );
-
     //////////////////////////////////////////////////
     //                                              //
     //            IF/ID Pipeline Register           //
     //                                              //
     //////////////////////////////////////////////////
 
-    assign if_id_enable = !stall;
+    assign if_id_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
 
+    //Cassie
     always_comb begin
        if_packet_nop = 'b0;
        if_packet_nop.inst = `NOP;       
@@ -297,7 +238,7 @@ module pipeline (
             if_id_reg.NPC   <= 0;
             if_id_reg.PC    <= 0;
         end else if (if_id_enable) begin
-            if_id_reg <= (ex_mem_reg.take_branch || !ICACHE_FETCH_instr_vld) ? if_packet_nop : (ld_to_use_stall ? if_id_reg : if_packet);
+            if_id_reg <= ex_mem_reg.take_branch ? if_packet_nop : (ld_to_use_stall ? if_id_reg : if_packet);
             //if_id_reg <= if_packet;
         end
     end
@@ -332,7 +273,7 @@ module pipeline (
     //                                              //
     //////////////////////////////////////////////////
 
-   
+    //Cassie
     always_comb begin
        id_packet_nop = 'b0;
        id_packet_nop.inst = `NOP;
@@ -343,7 +284,7 @@ module pipeline (
        */
     end
 
-    assign id_ex_enable = !stall;
+    assign id_ex_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
     always_ff @(posedge clock) begin
         if (reset) begin
@@ -420,7 +361,7 @@ module pipeline (
        ex_packet_nop = 'b0;
     end
     
-    assign ex_mem_enable = !stall;
+    assign ex_mem_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
     always_ff @(posedge clock) begin
         if (reset) begin
@@ -443,50 +384,17 @@ module pipeline (
     //                                              //
     //////////////////////////////////////////////////
 
-
     stage_mem stage_mem_0 (
         // Inputs
         .ex_mem_reg     (ex_mem_reg),
-        .Dmem2proc_data (DCACHE_LOAD_load_cache2proc_data[`XLEN-1:0]), // for p3, we throw away the top 32 bits
+        .Dmem2proc_data (mem2proc_data[`XLEN-1:0]), // for p3, we throw away the top 32 bits
 
         // Outputs
         .mem_packet        (mem_packet),
-        .proc2Dmem_command (),//Cassie: not needed for now
-        .proc2Dmem_size    (LOAD_DCACHE_load_proc2cache_size),
-        .proc2Dmem_addr    (LOAD_DCACHE_load_proc2cache_addr),
-        .proc2Dmem_data    (STORE_DCACHE_store_proc2cache_data)
-    );
-
-    assign LOAD_DCACHE_load_proc2cache_load = ex_mem_reg.valid && ex_mem_reg.rd_mem;
-
-    assign STORE_DCACHE_store_proc2cache_store = ex_mem_reg.valid && ex_mem_reg.wr_mem;
-    assign STORE_DCACHE_store_proc2cache_addr = LOAD_DCACHE_load_proc2cache_addr;
-    assign STORE_DCACHE_store_proc2cache_size = LOAD_DCACHE_load_proc2cache_size;
-    
-
-    Dcache_blocking Dcache(
-        .clk                            (clock),
-        .rst                            (reset),
-        .load_cache2proc_response_o     (DCACHE_LOAD_load_cache2proc_response), // Cassie:this need to be added to stage_mem. if cache do not have the data, need to stall the processor to wait for fetching from memory. stall can be release when DCACHE_LOAD_load_cache2proc_response != 0 ??
-        .load_cache2proc_data_o         (DCACHE_LOAD_load_cache2proc_data),
-        .load_cache2proc_tag_o          (DCACHE_LOAD_load_cache2proc_tag ),
-        .load_proc2cache_load_i         (LOAD_DCACHE_load_proc2cache_load),
-        .load_proc2cache_addr_i         (LOAD_DCACHE_load_proc2cache_addr),
-        .store_cache2proc_response_o    (DCACHE_STORE_store_cache2proc_response),
-        .store_proc2cache_store_i       (STORE_DCACHE_store_proc2cache_store),
-        .store_proc2cache_addr_i        (STORE_DCACHE_store_proc2cache_addr),
-        .store_proc2cache_data_i        (STORE_DCACHE_store_proc2cache_data),
-        .store_proc2cache_size_i        (STORE_DCACHE_store_proc2cache_size),
-        .mem2cache_response_i           (MEM_DCACHE_response),
-        .mem2cache_data_i               (mem2proc_data),
-        .mem2cache_tag_i                (mem2proc_tag),
-        .cache2mem_command_o            (DCACHE_MEM_command ),
-        .cache2mem_addr_o               (DCACHE_MEM_addr    ),
-        .cache2mem_data_o               (DCACHE_MEM_data    ),
-        .dbg_cache_mem                  (dbg_cache_mem      ),
-        .dbg_cache_addr                 (dbg_cache_addr     ),
-        .dbg_cache_valid                (dbg_cache_valid    ),
-        .dbg_cache_dirty                (dbg_cache_dirty    )
+        .proc2Dmem_command (proc2Dmem_command),
+        .proc2Dmem_size    (proc2Dmem_size),
+        .proc2Dmem_addr    (proc2Dmem_addr),
+        .proc2Dmem_data    (proc2Dmem_data)
     );
 
     //////////////////////////////////////////////////
@@ -504,8 +412,6 @@ module pipeline (
         end else if (mem_wb_enable) begin
             mem_wb_inst_dbg <= ex_mem_inst_dbg; // debug output, just forwarded from EX
             mem_wb_reg      <= mem_packet;
-            //mem_wb_inst_dbg <= stall ? `NOP : ex_mem_inst_dbg; // debug output, just forwarded from EX
-            //mem_wb_reg      <= stall ? mem_packet_nop : mem_packet;
         end
     end
 

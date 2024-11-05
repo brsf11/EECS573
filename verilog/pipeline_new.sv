@@ -107,7 +107,7 @@ module pipeline (
     EX_MEM_PACKET ex_packet, ex_packet_nop, ex_mem_reg;
 
     // Outputs from MEM-Stage and MEM/WB Pipeline Register
-    MEM_WB_PACKET mem_packet, mem_wb_reg, mem_packet_nop;
+    MEM_WB_PACKET mem_packet, mem_wb_reg;
 
     // Outputs from MEM-Stage to memory
     logic [`XLEN-1:0] proc2Dmem_addr;
@@ -504,8 +504,6 @@ module pipeline (
         end else if (mem_wb_enable) begin
             mem_wb_inst_dbg <= ex_mem_inst_dbg; // debug output, just forwarded from EX
             mem_wb_reg      <= mem_packet;
-            //mem_wb_inst_dbg <= stall ? `NOP : ex_mem_inst_dbg; // debug output, just forwarded from EX
-            //mem_wb_reg      <= stall ? mem_packet_nop : mem_packet;
         end
     end
 

@@ -13,6 +13,72 @@
 // all files should `include "sys_defs.svh" to at least define the timescale
 `timescale 1ns/100ps
 
+`define USE_NEW_ICACHE
+`define USE_NEW_FETCH
+
+///////////////////////////////////
+// ---- Starting Parameters ---- //
+///////////////////////////////////
+
+// some starting parameters that you should set
+// this is *your* processor, you decide these values (try analyzing which is best!)
+
+// superscalar width
+`define SC_WIDTH 4
+
+// sizes
+`define FETCH_WIDTH 8 // now can be 4 or 8
+// `define FETCH_WIDTH 2
+`define ROB_DEPTH 32  //FIX // Must be power of 2
+`define RS_DEPTH 16   //FIX   // Must be power of 2
+`define PHY_REG_NUM (32 + `ROB_DEPTH)
+`define NUM_BRANCH 3
+`define COMPLETE_BUFFER_DEPTH 8
+`define PREFETCH_BUFFER_DEPTH 32
+`define FETCH_BUFFER_DEPTH 32
+//TODO: modify DCACHE_LOAD_WIDTH and DCACHE_STORE_WIDTH
+`define SQ_DEPTH 8
+`define LQ_DEPTH 8
+`define DCACHE_LOAD_WIDTH 1
+`define DCACHE_STORE_WIDTH 1
+`define LD_COMPLETE_NUM 2
+
+
+// functional units (you should decide if you want more or fewer types of FUs)
+`define NUM_FU_ALU 3
+`define NUM_FU_MULT 1
+`define NUM_FU_BRANCH 1
+`define NUM_FU_LOAD 1
+`define NUM_FU_STORE 1 //unused
+
+//branch checkpoint define
+`define PAG_G 6
+`define PAG_P 4
+
+// number of mult stages (2, 4, or 8)
+`define MULT_STAGES 4
+
+// Issue selecotr name
+`define IssueSelector IssueSelector_RIBPS
+
+// Regfile
+`define REG_RD_NUM (`NUM_FU_ALU+`NUM_FU_MULT+`NUM_FU_BRANCH+`NUM_FU_LOAD)
+
+//SQ(C) DEFINE
+`define MEM_ADDR_WIDTH 16
+
+//debug signals
+// `define DEBUG
+
+// Cache
+// I$
+`define PREFETCH_DEPTH 8
+// D$
+`define DCACHE_LINE_NUM 32 // = 32 / set size
+`define LOAD_BUF_LEN 16
+`define DCACHE DcacheCore      // Dcache_nonblocking
+`define DCACHE_CORE CacheCore_DM // DcacheCore
+
 ///////////////////////////////
 // ---- Basic Constants ---- //
 ///////////////////////////////
@@ -282,9 +348,6 @@ typedef struct packed {
  * Data exchanged from the EX to the MEM stage
  */
 typedef struct packed {
-    //Cassie
-    logic             ex_memory_access; // If this instr is accessing memory
-
     logic [`XLEN-1:0] alu_result;
     logic [`XLEN-1:0] NPC;
 
