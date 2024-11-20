@@ -1,10 +1,10 @@
 #echo "Generating ground truth outputs from original processor"
 
-cd ~/eecs470/p3
+cd ~/eecs573/p3
 
 # This only runs *.s files. How could you add *.c files?
 #for source_file in programs/*.s programs/*.c; do
-for source_file in programs/mult_no_lsq.s; do
+for source_file in programs/*.s programs/*.c; do
     if [ "$source_file" = "programs/crt.s" ]; then continue; fi
     program=$(echo "$source_file" | cut -d '.' -f1 | cut -d '/' -f 2)
     

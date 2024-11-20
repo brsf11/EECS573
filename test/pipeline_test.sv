@@ -33,6 +33,7 @@ module testbench;
 
     // variables used in the testbench
     logic        clock;
+    logic        clock_shadow;
     logic        reset;
     logic [31:0] clock_count;
     logic [31:0] instr_count;
@@ -72,11 +73,17 @@ module testbench;
     logic [31:0]      mem_wb_inst_dbg;
     logic             mem_wb_valid_dbg;
 
+    // Debug output
+    logic [32+3:0][64-1:0] dbg_cache_mem;
+    logic [32+3:0][13-1:0] dbg_cache_addr;
+    logic [32+3:0]                 dbg_cache_valid;
+    logic [32+3:0]                 dbg_cache_dirty;
 
     // Instantiate the Pipeline
     pipeline core (
         // Inputs
         .clock             (clock),
+        //Cassie .clock_shadow      (clock_shadow),
         .reset             (reset),
         .mem2proc_response (mem2proc_response),
         .mem2proc_data     (mem2proc_data),
@@ -109,7 +116,11 @@ module testbench;
         .ex_mem_valid_dbg (ex_mem_valid_dbg),
         .mem_wb_NPC_dbg   (mem_wb_NPC_dbg),
         .mem_wb_inst_dbg  (mem_wb_inst_dbg),
-        .mem_wb_valid_dbg (mem_wb_valid_dbg)
+        .mem_wb_valid_dbg (mem_wb_valid_dbg),
+        .dbg_cache_mem   (dbg_cache_mem  ),
+        .dbg_cache_addr  (dbg_cache_addr ),
+        .dbg_cache_valid (dbg_cache_valid),
+        .dbg_cache_dirty (dbg_cache_dirty)
     );
 
 
@@ -137,6 +148,8 @@ module testbench;
         clock = ~clock;
     end
 
+    assign #(`CLOCK_PERIOD/2.0) clock_shadow = clock;
+
 
     // Task to display # of elapsed clock edges
     task show_clk_count;
@@ -150,7 +163,7 @@ module testbench;
         end
     endtask // task show_clk_count
 
-
+    /*
     // Show contents of a range of Unified Memory, in both hex and decimal
     task show_mem_with_decimal;
         input [31:0] start_addr;
@@ -159,7 +172,7 @@ module testbench;
         begin
             $display("@@@");
             showing_data=0;
-            for(int k=start_addr;k<=end_addr; k=k+1)
+            for(int k=start_addr;k<=end_addr; k=k+1) begin
                 if (memory.unified_memory[k] != 0) begin
                     $display("@@@ mem[%5d] = %x : %0d", k*8, memory.unified_memory[k],
                                                              memory.unified_memory[k]);
@@ -168,10 +181,46 @@ module testbench;
                     $display("@@@");
                     showing_data=0;
                 end
+            end
             $display("@@@");
         end
     endtask // task show_mem_with_decimal
-
+    */
+    task show_mem_with_decimal;
+        input [31:0] start_addr;
+        input [31:0] end_addr;
+        int showing_data;
+        int data_in_cache;
+        int cache_index;
+        begin
+            $display("@@@");
+            showing_data=0;
+            for(int k=start_addr;k<=end_addr; k=k+1)begin
+                cache_index = 0;
+                data_in_cache = 0;
+                for(int j=0;j<36;j++)begin
+                    if((dbg_cache_addr[j] == k) && (dbg_cache_valid[j] == 1) && (dbg_cache_dirty[j] == 1))begin
+                        cache_index = j;
+                        data_in_cache = 1;
+                        break;
+                    end
+                end
+                if ((data_in_cache == 0) && (memory.unified_memory[k] != 0)) begin
+                    $display("@@@ mem[%5d] = %x : %0d", k*8, memory.unified_memory[k],
+                                                             memory.unified_memory[k]);
+                    showing_data=1;
+                end else if((data_in_cache == 1) && (dbg_cache_mem[cache_index] != 0)) begin
+                    $display("@@@ mem[%5d] = %x : %0d", k*8, dbg_cache_mem[cache_index],
+                                                            dbg_cache_mem[cache_index]);
+                    showing_data=1;
+                end else if(showing_data!=0) begin
+                    $display("@@@");
+                    showing_data=0;
+                end
+            end
+            $display("@@@");
+        end
+    endtask // task show_mem_with_decimal
 
     initial begin
         //$dumpvars;
@@ -293,7 +342,7 @@ module testbench;
                 show_clk_count;
                 print_close(); // close the pipe_print output file
                 $fclose(wb_fileno);
-                #100 $finish;
+                #1000 $finish;
             end
             debug_counter <= debug_counter + 1;
         end // if(reset)

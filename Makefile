@@ -159,8 +159,9 @@ SOURCES = verilog/pipeline.sv \
           verilog/IcacheCore.sv \
           verilog/unsteer.sv \
           verilog/StreamBuf.sv \
-          verilog/icache.sv \
-          verilog/Dcache_blocking.sv
+          verilog/icache_old.sv \
+          verilog/Dcache_blocking.sv \
+          verilog/razor_wrapper.sv
 
 SYNTH_FILES = synth/pipeline.vg
 

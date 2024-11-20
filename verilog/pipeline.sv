@@ -12,6 +12,7 @@
 
 module pipeline (
     input        clock,             // System clock
+    //Cassie input        clock_shadow,      // System shadow clock
     input        reset,             // System reset
     input [3:0]  mem2proc_response, // Tag from memory about current request
     input [63:0] mem2proc_data,     // Data coming back from memory
@@ -47,14 +48,13 @@ module pipeline (
     output logic             ex_mem_valid_dbg,
     output logic [`XLEN-1:0] mem_wb_NPC_dbg,
     output logic [31:0]      mem_wb_inst_dbg,
-    output logic             mem_wb_valid_dbg
-);
-    //Cassie
+    output logic             mem_wb_valid_dbg,
     //Dcache dbg
-    logic [32+3:0][64-1:0]                                          dbg_cache_mem;
-    logic [32+3:0][13-1:0]                                          dbg_cache_addr;
-    logic [32+3:0]                                                  dbg_cache_valid;
-    logic [32+3:0]                                                  dbg_cache_dirty;
+    output logic [32+3:0][64-1:0]                                          dbg_cache_mem,
+    output logic [32+3:0][13-1:0]                                          dbg_cache_addr,
+    output logic [32+3:0]                                                  dbg_cache_valid,
+    output logic [32+3:0]                                                  dbg_cache_dirty
+);
 
     logic [3:0]  MEM_DCACHE_response;
     logic [1:0]  DCACHE_MEM_command;
@@ -62,7 +62,7 @@ module pipeline (
     logic [63:0] DCACHE_MEM_data;
     
     logic                           [`XLEN-1:0]   FETCH_ICACHE_instr_fetch_pc;
-    logic                           [`XLEN-1:0]   ICACHE_FETCH_instr;
+    logic                           [`FETCH_WIDTH-1:0][`XLEN-1:0]   ICACHE_FETCH_instr;
     logic                                         ICACHE_FETCH_instr_vld;
     //ICACHE <-> MEM
     logic [3:0]  MEM_ICACHE_response;
@@ -86,6 +86,7 @@ module pipeline (
     MEM_SIZE                                                    STORE_DCACHE_store_proc2cache_size;
 
     logic          stall;
+    //Cassie logic          razor_in_rdy, razor_out_vld, razor_mismatch;
     
     //////////////////////////////////////////////////
     //                                              //
@@ -244,7 +245,7 @@ module pipeline (
         .if_valid       ((ICACHE_FETCH_instr_vld)&&(!ld_to_use_stall)&&(!stall)),
         .take_branch    (ex_mem_reg.take_branch),
         .branch_target  (ex_mem_reg.alu_result),
-        .Imem2proc_data (ICACHE_FETCH_instr),
+        .Imem2proc_data ({ICACHE_FETCH_instr[1],ICACHE_FETCH_instr[0]}),
 
         // Outputs
         .if_packet      (if_packet),
@@ -257,18 +258,18 @@ module pipeline (
     assign if_valid_dbg = if_packet.valid;
 
     //Cassie
-    icache icache(
-        .clk                                (clock),
-        .rst                                (reset),
+    icache_old icache(
+        .clock                                (clock),
+        .reset                                (reset),
 
-        .instr_fetch_pc_i                   (FETCH_ICACHE_instr_fetch_pc),
-        .instr_o                            (ICACHE_FETCH_instr),
-        .instr_vld_o                        (ICACHE_FETCH_instr_vld),
-        .mem2cache_response                 (MEM_ICACHE_response), //Cassie: does icache know when the data input is valid?
-        .mem2cache_data                     (mem2proc_data),
-        .mem2cache_tag                      (mem2proc_tag),
-        .cache2mem_command                  (ICACHE_MEM_command),
-        .cache2mem_addr                     (ICACHE_MEM_addr)
+        .Imem2proc_response                 (MEM_ICACHE_response), 
+        .Imem2proc_data                     (mem2proc_data),
+        .Imem2proc_tag                      (mem2proc_tag),
+        .proc2Icache_addr                   (FETCH_ICACHE_instr_fetch_pc),
+        .proc2Imem_command                  (ICACHE_MEM_command),
+        .proc2Imem_addr                     (ICACHE_MEM_addr),              
+        .Icache_data_out                    (ICACHE_FETCH_instr), 
+        .Icache_valid_out                   (ICACHE_FETCH_instr_vld)  
     );
 
     //////////////////////////////////////////////////
@@ -282,7 +283,9 @@ module pipeline (
 
     always_comb begin
        if_packet_nop = 'b0;
-       if_packet_nop.inst = `NOP;       
+       if_packet_nop.inst = `NOP; 
+       if_packet_nop.valid = 0;
+      
        /*
        if_packet_nop = if_packet;
        if_packet_nop.inst  = `NOP;
@@ -336,6 +339,7 @@ module pipeline (
     always_comb begin
        id_packet_nop = 'b0;
        id_packet_nop.inst = `NOP;
+       id_packet_nop.valid = 0;
        /*
        id_packet_nop       = id_packet;
        id_packet_nop.inst  = `NOP;
@@ -367,8 +371,8 @@ module pipeline (
                 1'b0  // valid
             };
         end else if (id_ex_enable) begin
-            id_ex_reg <= (ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet);
-            //id_ex_reg <= id_packet;
+            id_ex_reg <= ((ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet));
+            //Cassie id_ex_reg <= ~razor_in_rdy ? id_ex_reg : ((ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet));
         end
     end
 
@@ -415,9 +419,10 @@ module pipeline (
     //           EX/MEM Pipeline Register           //
     //                                              //
     //////////////////////////////////////////////////
-    
+    //Cassie
     always_comb begin
        ex_packet_nop = 'b0;
+       ex_packet_nop.valid = 0;
     end
     
     assign ex_mem_enable = !stall;
@@ -432,10 +437,29 @@ module pipeline (
             //ex_mem_reg      <= ex_packet;
         end
     end
-
+    
     // debug outputs
     assign ex_mem_NPC_dbg   = ex_mem_reg.NPC;
     assign ex_mem_valid_dbg = ex_mem_reg.valid;
+    
+    /*Cassie
+    // razor
+    razor_wrapper #(.DATA_WIDTH($bits(EX_MEM_PACKET))) razor (
+    .clk(clock),
+    .clk_shadow(clock_shadow),
+    .rst_n(~reset),
+    // Upstream
+    .in_data(ex_packet), 
+    .in_vld(!ex_mem_reg.take_branch & ex_mem_reg.valid),
+    .in_rdy(razor_in_rdy),
+    // Downstream
+    .out_data(ex_mem_reg),
+    .out_vld(razor_out_vld),
+    .out_rdy(!stall),
+    // Other
+    .mismatch(razor_mismatch)
+    );
+    */
 
     //////////////////////////////////////////////////
     //                                              //
@@ -443,6 +467,10 @@ module pipeline (
     //                                              //
     //////////////////////////////////////////////////
 
+    always_comb begin
+       mem_packet_nop = 'b0;
+       mem_packet_nop.valid = 0;
+    end
 
     stage_mem stage_mem_0 (
         // Inputs
@@ -502,10 +530,9 @@ module pipeline (
             mem_wb_inst_dbg <= `NOP; // debug output
             mem_wb_reg      <= 0;    // the defaults can all be zero!
         end else if (mem_wb_enable) begin
-            mem_wb_inst_dbg <= ex_mem_inst_dbg; // debug output, just forwarded from EX
-            mem_wb_reg      <= mem_packet;
-            //mem_wb_inst_dbg <= stall ? `NOP : ex_mem_inst_dbg; // debug output, just forwarded from EX
-            //mem_wb_reg      <= stall ? mem_packet_nop : mem_packet;
+            //mem_wb_inst_dbg <= ex_mem_inst_dbg; // debug output, just forwarded from EX
+            //mem_wb_reg      <= mem_packet;
+            mem_wb_reg      <= stall ? mem_packet_nop : mem_packet;
         end
     end
 
@@ -536,9 +563,12 @@ module pipeline (
     //////////////////////////////////////////////////
 
     assign pipeline_completed_insts = {3'b0, mem_wb_reg.valid}; // commit one valid instruction
-    assign pipeline_error_status = mem_wb_reg.illegal        ? ILLEGAL_INST :
+    /*assign pipeline_error_status = mem_wb_reg.illegal        ? ILLEGAL_INST :
                                    mem_wb_reg.halt           ? HALTED_ON_WFI :
                                    (mem2proc_response==4'h0) ? LOAD_ACCESS_FAULT : NO_ERROR;
+    */
+    assign pipeline_error_status = mem_wb_reg.illegal        ? ILLEGAL_INST :
+                                   mem_wb_reg.halt           ? HALTED_ON_WFI : NO_ERROR;
 
     assign pipeline_commit_wr_en   = wb_regfile_en;
     assign pipeline_commit_wr_idx  = wb_regfile_idx;

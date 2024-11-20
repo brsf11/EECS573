@@ -45,7 +45,6 @@ module stage_if (
     // this mux is because the Imem gives us 64 bits not 32 bits
     //assign if_packet.inst = (~if_valid) ? `NOP :
     //                        PC_reg[2] ? Imem2proc_data[63:32] : Imem2proc_data[31:0];
-    //Cassie
     assign if_packet.inst = (~if_valid) ? `NOP : Imem2proc_data[31:0];
 
     assign if_packet.PC  = PC_reg;

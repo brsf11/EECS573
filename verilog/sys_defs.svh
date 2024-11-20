@@ -24,10 +24,11 @@
 // this is *your* processor, you decide these values (try analyzing which is best!)
 
 // superscalar width
-`define SC_WIDTH 4
+`define SC_WIDTH 3
+`define CACHE_MODE
 
 // sizes
-`define FETCH_WIDTH 8 // now can be 4 or 8
+`define FETCH_WIDTH 2 // now can be 4 or 8
 // `define FETCH_WIDTH 2
 `define ROB_DEPTH 32  //FIX // Must be power of 2
 `define RS_DEPTH 16   //FIX   // Must be power of 2
@@ -107,7 +108,8 @@
 // this will change for project 4
 // the project 3 processor has a massive boost in performance just from having no mem latency
 // see if you can beat it's CPI in project 4 even with a 100ns latency!
-`define MEM_LATENCY_IN_CYCLES  0
+//`define MEM_LATENCY_IN_CYCLES  0
+`define MEM_LATENCY_IN_CYCLES (100.0/`CLOCK_PERIOD+0.49999)
 
 `define NUM_MEM_TAGS 15
 
