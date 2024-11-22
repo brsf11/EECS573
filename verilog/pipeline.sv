@@ -300,8 +300,10 @@ module pipeline (
             if_id_reg.NPC   <= 0;
             if_id_reg.PC    <= 0;
         end else if (if_id_enable) begin
-            if_id_reg <= (ex_mem_reg.take_branch || !ICACHE_FETCH_instr_vld) ? if_packet_nop : (ld_to_use_stall ? if_id_reg : if_packet);
-            //if_id_reg <= if_packet;
+            //if_id_reg <= (ex_mem_reg.take_branch || !ICACHE_FETCH_instr_vld) ? if_packet_nop : (ld_to_use_stall ? if_id_reg : if_packet);
+            if_id_reg <= ex_mem_reg.take_branch ? if_packet_nop : 
+                                ld_to_use_stall ? if_id_reg : 
+                        !ICACHE_FETCH_instr_vld ? if_packet_nop : if_packet;
         end
     end
 
@@ -347,7 +349,8 @@ module pipeline (
        */
     end
 
-    assign id_ex_enable = !stall;
+    //assign id_ex_enable = !stall;
+    assign id_ex_enable = 1'b1;
     // synopsys sync_set_reset "reset"
     always_ff @(posedge clock) begin
         if (reset) begin
@@ -371,7 +374,8 @@ module pipeline (
                 1'b0  // valid
             };
         end else if (id_ex_enable) begin
-            id_ex_reg <= ((ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet));
+            id_ex_reg <= stall ? id_ex_reg_fwd : ((ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet));
+            //id_ex_reg <= ((ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet));
             //Cassie id_ex_reg <= ~razor_in_rdy ? id_ex_reg : ((ex_mem_reg.take_branch || ld_to_use_stall) ? id_packet_nop : (id_packet));
         end
     end
