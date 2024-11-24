@@ -44,6 +44,64 @@ module stage_mem (
     assign proc2Dmem_data = ex_mem_reg.rs2_value;
     assign proc2Dmem_addr = ex_mem_reg.alu_result; // Memory address is calculated by the ALU
 
+    //Cassie
+    always_comb begin
+        read_data = Dmem2proc_data;
+        case(ex_mem_reg.mem_size)
+            BYTE:begin
+                 case(proc2Dmem_addr[1:0])
+                     2'b00:begin
+                         read_data[7:0] = Dmem2proc_data[7:0];
+                     end
+                     2'b01:begin
+                         read_data[7:0] = Dmem2proc_data[15:8];
+                     end
+                     2'b10:begin
+                         read_data[7:0] = Dmem2proc_data[23:16];
+                     end
+                     2'b11:begin
+                         read_data[7:0] = Dmem2proc_data[31:24];
+                     end
+                     default:begin
+                         read_data = Dmem2proc_data;
+                     end
+                 endcase
+            end
+            HALF:begin
+                if(proc2Dmem_addr[1] == 1'b0)begin
+                    read_data[15:0] = Dmem2proc_data[15:0];
+                end
+                else begin
+                    read_data[15:0] = Dmem2proc_data[31:16];
+                end
+            end
+            WORD:begin
+                read_data = Dmem2proc_data;
+            end
+            default:begin
+                read_data = Dmem2proc_data;
+            end
+        endcase
+        if (ex_mem_reg.rd_unsigned) begin
+            // unsigned: zero-extend the data
+            if (ex_mem_reg.mem_size == BYTE) begin
+                read_data[`XLEN-1:8] = 0;
+            end else if (ex_mem_reg.mem_size == HALF) begin
+                read_data[`XLEN-1:16] = 0;
+            end
+        end else begin
+            // signed: sign-extend the data
+            if (ex_mem_reg.mem_size[1:0] == BYTE) begin
+                read_data[`XLEN-1:8] = {(`XLEN-8){read_data[7]}};
+            end else if (ex_mem_reg.mem_size == HALF) begin
+                read_data[`XLEN-1:16] = {(`XLEN-16){read_data[15]}};
+            end
+        end
+
+    end
+    //Cassie
+
+    /*
     // Read data from memory and sign extend the proper bits
     always_comb begin
         read_data = Dmem2proc_data;
@@ -63,5 +121,6 @@ module stage_mem (
             end
         end
     end
+    */
 
 endmodule // stage_mem
