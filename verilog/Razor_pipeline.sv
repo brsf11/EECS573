@@ -1,5 +1,5 @@
 module Razor_pipeline #(
-    parameter DATA_WIDTH = 1
+    parameter DATA_WIDTH = 192
 )(
     // Global
     input  logic                 clk,clk_shadow,rst_n,
@@ -80,17 +80,23 @@ module Razor_pipeline #(
     always_ff @(posedge clk_shadow) begin
         if(!rst_n) begin
             out_data_shadow <= 0;
-            mismatch        <= 0;
+            // mismatch        <= 0;
         end
         else begin
             out_data_shadow <= in_data;
-            `ifdef SYNTH
-            mismatch        <= is_speculative & (|(in_data ^ out_data));
-            `else
-            mismatch        <= 0;
-            `endif
+            // `ifdef SYNTH
+            // mismatch        <= is_speculative & (|(in_data ^ out_data));
+            // `else
+            // mismatch        <= 0;
+            // `endif
         end
     end
+
+    `ifdef SYNTH
+    assign mismatch = is_speculative & (|(out_data_shadow ^ out_data));
+    `else
+    assign mismatch = 0;
+    `endif
 
     // Other logic
     assign in_rdy  = ((~(is_speculative | data_valid)) | out_rdy) & (~mismatch);

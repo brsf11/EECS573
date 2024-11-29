@@ -53,3 +53,10 @@ output/
 
 *.fst
 *.txt
+
+presynth/
+alib-52/
+cksum_dir/
+
+*.sdf
+*.sdc

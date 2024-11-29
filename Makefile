@@ -36,7 +36,6 @@
 ######################################################
 
 # this is a global clock period variable used in the tcl script and referenced in testbenches
-export CLOCK_PERIOD = 10
 # LAB2 TODO: Finish your 64-bit testbench, then synthesize the design.
 #            Change the clock period so that slack isn't violated
 
@@ -52,21 +51,36 @@ VCS_BAD_WARNINGS = +warn=noTFIPC +warn=noDEBUG_DEP +warn=noENUMASSIGN
 LIB = /afs/umich.edu/class/eecs470/lib/verilog/lec25dscc25.v
 
 # the EECS 470 synthesis script
-TCL_SCRIPT = 470synth.tcl
+TCL_SCRIPT = synth/470synth.tcl
 
 ####################################
 # ---- Executable Compilation ---- #
 ####################################
 
 # You should only need to modify this section, and only the following variables:
-TESTBENCH   = ./test/test_mult.sv
-SOURCES     = ./verilog/mult_stage.sv \
-			  ./verilog/mult.sv \
-			  ./verilog/mult_stage_comb.sv \
-			  ./verilog/Normal_pipeline.sv
-SYNTH_FILES = KSA.vg
+TESTBENCH   = test/test_mult.sv
+SOURCES     = verilog/mult_stage.sv \
+			  verilog/mult.sv \
+			  verilog/Razor_pipeline.sv
+SYNTH_FILES = synth/mult.vg
+export CHILD_MODULES = mult_stage_comb
 
-SDF_DEFINE = -sdf max:test_KSA.DUT.KSA:synth/KSA.sdf
+MULT_STAGE_COMB_SOURCE = verilog/mult_stage_comb.sv
+
+
+SDF_DEFINE = -sdf typ:test_mult.DUT:synth/mult.sdf
+
+MAX_DELAY         = 5.0
+MIN_DELAY         = 2.5
+CLOCK_UNCERTAINTY = 0.1
+SETUP_TIME        = 0.47
+
+export CLOCK_PERIOD = $(shell echo "$(MAX_DELAY) - $(MIN_DELAY) + 2 * $(CLOCK_UNCERTAINTY) + $(SETUP_TIME)" | bc -l)
+SKEW = $(shell echo "$(MIN_DELAY) - $(CLOCK_UNCERTAINTY)" | bc -l)
+
+export DDC_FILES = presynth/mult_$(MAX_DELAY)_$(MIN_DELAY)/mult_stage_comb.ddc
+
+TIMING_DEFINE = +define+TEST_CLOCK_PERIOD=$(CLOCK_PERIOD) +define+SHADOW_SKEW=$(SKEW)
 
 # LAB2 TODO: write the 1bit testbench, then compile and run with `make`
 #            once it passes, change the variables and test the 64bit adder
@@ -78,30 +92,30 @@ SDF_DEFINE = -sdf max:test_KSA.DUT.KSA:synth/KSA.sdf
 simv: $(TESTBENCH) $(SOURCES)
 	@$(call PRINT_COLOR, 5, compiling the simulation executable $@)
 	@$(call PRINT_COLOR, 3, NOTE: if this is slow to startup: run '"module load vcs verdi synopsys-synth"')
-	$(VCS) $^ -o $@
+	$(VCS) $(TIMING_DEFINE) $^ $(MULT_STAGE_COMB_SOURCE) -o $@
 	@$(call PRINT_COLOR, 6, finished compiling $@)
 # NOTE: we reference variables with $(VARIABLE), and can make use of the automatic variables: ^, @, <, etc
 # see: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html for explanations
 
 # a make pattern rule to generate the .vg synthesis files
 # pattern rules use the % as a wildcard to match multiple possible targets
-%.vg: %.sv | $(TCL_SCRIPT)
+synth/%.vg: $(SOURCES) $(TCL_SCRIPT) $(HEADERS)
 	@$(call PRINT_COLOR, 5, synthesizing the $* module)
 	@$(call PRINT_COLOR, 3, this might take a while...)
 	@$(call PRINT_COLOR, 3, NOTE: if this is slow to startup: run '"module load vcs verdi synopsys-synth"')
 	# pipefail causes the command to exit on failure even though it's piping to tee
-	set -o pipefail; MODULE=$* SOURCES="$^" dc_shell-t -f $(TCL_SCRIPT) | tee $*_synth.out
+	set -o pipefail; cd synth && MODULE=$* SOURCES="$(SOURCES)" dc_shell-t -f $(notdir $(TCL_SCRIPT)) | tee $*_synth.out
 	@$(call PRINT_COLOR, 6, finished synthesizing $@)
 # this also generates many other files, see the tcl script's introduction for info on each of them
 
 # add all sources as extra dependencies for each SYNTH_FILES target
 # this is used when SOURCES="$^" uses the automatic variable $^ to reference all dependencies
-$(SYNTH_FILES): $(SOURCES)
+# $(SYNTH_FILES): $(SOURCES)
 
 # the synthesis executable runs your testbench on the synthesized versions of your modules
 syn_simv: $(TESTBENCH) $(SYNTH_FILES)
 	@$(call PRINT_COLOR, 5, compiling the synthesis executable $@)
-	$(VCS) $(SDF_DEFINE) +define+SYNTH $^ $(LIB) -o $@
+	$(VCS) $(SDF_DEFINE) $(TIMING_DEFINE) +define+SYNTH $^ $(LIB) -o $@
 	@$(call PRINT_COLOR, 6, finished compiling $@)
 # we need to link the synthesized modules against LIB, so this differs slightly from simv above
 # but we still compile with the same non-synthesizable testbench
@@ -125,7 +139,7 @@ sim: simv
 
 syn: syn_simv
 	@$(call PRINT_COLOR, 5, running $<)
-	./syn_simv | tee program.syn.out
+	./syn_simv > tee program.syn.out
 	@$(call PRINT_COLOR, 2, output saved to program.syn.out)
 
 # NOTE: phony targets don't create files matching their name, and make will always run their commands
@@ -186,7 +200,7 @@ clean_run_files:
 
 clean_synth:
 	@$(call PRINT_COLOR, 1, removing synthesis files)
-	rm -rf *.vg *_svsim.sv *.res *.rep *.ddc *.chk *.syn *_synth.out *.mr *.pvl command.log
+	cd synth && rm -rf *.vg *_svsim.sv *.res *.rep *.ddc *.chk *.syn *.out *.db *.svf *.mr *.pvl command.log
 
 .PHONY: clean nuke clean_%
 

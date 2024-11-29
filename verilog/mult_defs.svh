@@ -10,7 +10,7 @@
 //          Set this back to 8 for programming the ISR module.
 
 // STAGES can be 2, 4, or 8
-`define STAGES 8
+`define STAGES 4
 
 
 `endif // MULT_DEFS_SVH

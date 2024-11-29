@@ -1,6 +1,10 @@
 `timescale 1ns/1ps
-`define TEST_CLOCK_PERIOD 3.8
-`define SHADOW_SKEW       1.8
+`ifndef TEST_CLOCK_PERIOD
+    `define TEST_CLOCK_PERIOD 3.8
+`endif 
+`ifndef SHADOW_SKEW
+    `define SHADOW_SKEW       1.8
+`endif
 module test_mult();
 
     logic is_FAIL;
@@ -34,7 +38,7 @@ module test_mult();
     end
 
     always begin
-        #(`TEST_CLOCK_PERIOD/2);
+        #(`TEST_CLOCK_PERIOD / 2);
         clk = ~clk;
     end
 
@@ -42,7 +46,7 @@ module test_mult();
         clk_shadow = 1;
         #(`SHADOW_SKEW);
         while(1)begin
-            #(`TEST_CLOCK_PERIOD/2);
+            #(`TEST_CLOCK_PERIOD / 2);
             clk_shadow = ~clk_shadow;
         end
     end
