@@ -92,8 +92,16 @@ module Razor_pipeline #(
         end
     end
 
+    logic comparator_out;
+
+    Comparator CMP (
+        .A   (out_data_shadow),
+        .B   (out_data       ),
+        .out (comparator_out )
+    );
+
     `ifdef SYNTH
-    assign mismatch = is_speculative & (|(out_data_shadow ^ out_data));
+    assign mismatch = is_speculative & comparator_out;
     `else
     assign mismatch = 0;
     `endif

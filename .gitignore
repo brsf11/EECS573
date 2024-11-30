@@ -54,9 +54,12 @@ output/
 *.fst
 *.txt
 
-presynth/
 alib-52/
 cksum_dir/
 
+presynth/mult*/
+presynth/Comparator*/
+
 *.sdf
 *.sdc
+*.ddb

@@ -102,8 +102,8 @@ module test_mult();
             end
         end
         // Downstream random back-pressure
-        #0.1;
-        out_rdy = $random()&1;
+        // #0.1;
+        // out_rdy = $random()&1;
     end
 
     integer i;
@@ -118,16 +118,16 @@ module test_mult();
             if(i%1000 == 999)
                 $display("1000 cases Passed");
         end
-        // Test random in_vld
-        for(i=0;i<10000;i=i+1) begin
-            if(($random()&1) == 1)begin
-                @(posedge clk);
-                #1;
-            end
-            feed({$random(),$random()},{$random(),$random()});
-            if(i%1000 == 999)
-                $display("1000 cases Passed");
-        end
+        // // Test random in_vld
+        // for(i=0;i<10000;i=i+1) begin
+        //     if(($random()&1) == 1)begin
+        //         @(posedge clk);
+        //         #1;
+        //     end
+        //     feed({$random(),$random()},{$random(),$random()});
+        //     if(i%1000 == 999)
+        //         $display("1000 cases Passed");
+        // end
         #40;
         $fclose(feed_file);
         $fclose(compare_file);

@@ -58,27 +58,37 @@ TCL_SCRIPT = synth/470synth.tcl
 ####################################
 
 # You should only need to modify this section, and only the following variables:
-TESTBENCH   = test/test_mult.sv
+TESTBENCH   = test/test_mult_nb.sv
 SOURCES     = verilog/mult_stage.sv \
 			  verilog/mult.sv \
+			  verilog/Comparator_synth.sv \
 			  verilog/Razor_pipeline.sv
 SYNTH_FILES = synth/mult.vg
-export CHILD_MODULES = mult_stage_comb
+export CHILD_MODULES = mult_stage_comb \
+					   Comparator
 
 MULT_STAGE_COMB_SOURCE = verilog/mult_stage_comb.sv
+
+CMP_REF = verilog/Comparator.sv \
+		  verilog/Comparator_synth.vg
 
 
 SDF_DEFINE = -sdf typ:test_mult.DUT:synth/mult.sdf
 
 MAX_DELAY         = 5.0
-MIN_DELAY         = 2.5
+MIN_DELAY         = 1.0
 CLOCK_UNCERTAINTY = 0.1
 SETUP_TIME        = 0.47
 
-export CLOCK_PERIOD = $(shell echo "$(MAX_DELAY) - $(MIN_DELAY) + 2 * $(CLOCK_UNCERTAINTY) + $(SETUP_TIME)" | bc -l)
-SKEW = $(shell echo "$(MIN_DELAY) - $(CLOCK_UNCERTAINTY)" | bc -l)
+# export CLOCK_PERIOD = $(shell echo "$(MAX_DELAY) - $(MIN_DELAY) + 2 * $(CLOCK_UNCERTAINTY) + $(SETUP_TIME)" | bc -l)
+# export SKEW = $(shell echo "$(MIN_DELAY) - $(CLOCK_UNCERTAINTY)" | bc -l)
 
-export DDC_FILES = presynth/mult_$(MAX_DELAY)_$(MIN_DELAY)/mult_stage_comb.ddc
+export CLOCK_PERIOD = $(shell printf "%.2f" $$(echo "scale=2; $(MAX_DELAY) - $(MIN_DELAY) + 2 * $(CLOCK_UNCERTAINTY) + $(SETUP_TIME)" | bc -l))
+export SKEW = $(shell printf "%.2f" $$(echo "scale=2; $(MIN_DELAY) - $(CLOCK_UNCERTAINTY)" | bc -l))
+
+
+export DDC_FILES = presynth/mult_$(MAX_DELAY)_$(MIN_DELAY)/mult_stage_comb.ddc \
+				   presynth/Comparator/Comparator.ddc
 
 TIMING_DEFINE = +define+TEST_CLOCK_PERIOD=$(CLOCK_PERIOD) +define+SHADOW_SKEW=$(SKEW)
 
@@ -113,7 +123,7 @@ synth/%.vg: $(SOURCES) $(TCL_SCRIPT) $(HEADERS)
 # $(SYNTH_FILES): $(SOURCES)
 
 # the synthesis executable runs your testbench on the synthesized versions of your modules
-syn_simv: $(TESTBENCH) $(SYNTH_FILES)
+syn_simv: $(TESTBENCH) $(SYNTH_FILES) $(CMP_REF)
 	@$(call PRINT_COLOR, 5, compiling the synthesis executable $@)
 	$(VCS) $(SDF_DEFINE) $(TIMING_DEFINE) +define+SYNTH $^ $(LIB) -o $@
 	@$(call PRINT_COLOR, 6, finished compiling $@)
@@ -139,7 +149,7 @@ sim: simv
 
 syn: syn_simv
 	@$(call PRINT_COLOR, 5, running $<)
-	./syn_simv > tee program.syn.out
+	./syn_simv > syn.out
 	@$(call PRINT_COLOR, 2, output saved to program.syn.out)
 
 # NOTE: phony targets don't create files matching their name, and make will always run their commands

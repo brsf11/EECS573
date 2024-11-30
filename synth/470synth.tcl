@@ -60,6 +60,7 @@ try {
     set clock_period [getenv CLOCK_PERIOD]
     set sources [getenv SOURCES]
     set design_name [getenv MODULE]
+    set shadow_skew [getenv SKEW]
 } on error {msg} {
     puts "ERROR: failed to load a required environment variable"
     puts "Message: $msg"
@@ -175,13 +176,36 @@ proc eecs_470_set_wire_load {design_name} {
   set_fix_multiple_port_nets -outputs -buffer_constants
 }
 
-proc eecs_470_generate_clock {clock_name clock_period} {
+# proc eecs_470_generate_clock {clock_name clock_period} {
+#   set CLK_UNCERTAINTY 0.1 ;# the latency/transition time of the clock
+
+#   create_clock -period $clock_period -name $clock_name [find port $clock_name]
+#   set_clock_uncertainty $CLK_UNCERTAINTY $clock_name
+#   set_fix_hold $clock_name
+# }
+
+proc eecs_470_generate_clock {clock_name clock_period shadow_skew} {
   set CLK_UNCERTAINTY 0.1 ;# the latency/transition time of the clock
 
   create_clock -period $clock_period -name $clock_name [find port $clock_name]
+  create_generated_clock -source [find port $clock_name] -edges { 1 2 3 } -edge_shift [list $shadow_skew $shadow_skew $shadow_skew ] -name clk_shadow [find port clk_shadow]
   set_clock_uncertainty $CLK_UNCERTAINTY $clock_name
+  set_clock_uncertainty $CLK_UNCERTAINTY clk_shadow
   set_fix_hold $clock_name
+  set_fix_hold clk_shadow
 }
+
+# proc eecs_470_setup_paths {clock_name} {
+#   set DRIVING_CELL dffacs1 ;# the driving cell from the link_library
+
+#   # TODO: can we just remove these lines?
+#   group_path -from [all_inputs] -name input_grp
+#   group_path -to [all_outputs] -name output_grp
+
+#   set_driving_cell  -lib_cell $DRIVING_CELL [all_inputs]
+#   remove_driving_cell [find port $clock_name]
+#   remove_driving_cell [find port clk_shadow]
+# }
 
 proc eecs_470_setup_paths {clock_name} {
   set DRIVING_CELL dffacs1 ;# the driving cell from the link_library
@@ -217,9 +241,13 @@ proc eecs_470_set_design_constraints {reset_name clock_name clock_period} {
   set_input_delay $AVG_INPUT_DELAY -clock $clock_name [all_inputs]
   set_output_delay $AVG_OUTPUT_DELAY -clock $clock_name [all_outputs]
 
+  # set_input_delay $AVG_INPUT_DELAY -clock clk_shadow [all_inputs]
+  # set_output_delay $AVG_OUTPUT_DELAY -clock clk_shadow [all_outputs]
+
   # remove constraints for only the clock and reset
   # I'm not actually sure if we need these after the others or not
   remove_input_delay -clock $clock_name [find port $clock_name]
+  remove_input_delay -clock $clock_name [find port clk_shadow]
   set_dont_touch $reset_name
   set_resistance 0 $reset_name
   set_drive 0 $reset_name
@@ -243,13 +271,13 @@ eecs_470_set_compilation_flags
 if { ![link] } {exit 1}
 
 eecs_470_set_wire_load $design_name
-eecs_470_generate_clock $clock_name $clock_period
+eecs_470_generate_clock $clock_name $clock_period $shadow_skew
 eecs_470_setup_paths $clock_name
 eecs_470_set_design_constraints $reset_name $clock_name $clock_period
 
 # separate the subdesign instances to improve synthesis (excluding set_dont_touch designs)
 # do this before writing the check file
-uniquify
+# uniquify
 # ungroup -all -flatten
 
 # write the check file before compiling
@@ -276,14 +304,6 @@ set sdf_file     ./${design_name}.sdf      ;# SDF file
 set sdc_file     ./${design_name}.sdc      ;# SDC file
 
 
-# write the design into both sv and ddc formats, also the svsim wrapper
-write_file -hierarchy -format verilog -output $netlist_file $design_name
-write_file -hierarchy -format ddc     -output $ddc_file     $design_name
-write_file            -format svsim   -output $svsim_file   $design_name
-
-write_sdf -version 2.1 $sdf_file
-write_sdc $sdc_file
-
 # the various reports (design, area, timing, constraints, resources)
 redirect         $rep_file { report_design -nosplit }
 redirect -append $rep_file { report_area }
@@ -291,10 +311,22 @@ redirect -append $rep_file { report_timing -max_paths 2 -input_pins -nets -trans
 redirect -append $rep_file { report_constraint -max_delay -verbose -nosplit }
 redirect -append $rep_file { report_resources -hier }
 
+# write the design into both sv and ddc formats, also the svsim wrapper
+remove_design Comparator
+write_file -hierarchy   -format verilog -output $netlist_file $design_name
+# write_file            -format verilog -output ./mult_stage_comb.vg mult_stage_comb
+# write_file            -format verilog -output ./mult_stage.vg      mult_stage
+# write_file            -format verilog -output ./Razor_pipeline.vg  Razor_pipeline
+write_file -hierarchy -format ddc     -output $ddc_file     $design_name
+write_file            -format svsim   -output $svsim_file   $design_name
+
+write_sdf -version 2.1 $sdf_file
+write_sdc $sdc_file
+
 # also report a reference of the used modules from the final netlist
 remove_design -all
 read_file -format verilog $netlist_file
 current_design $design_name
-redirect -append $rep_file { report_reference -nosplit }
+# redirect -append $rep_file { report_reference -nosplit }
 
-exit 0 ;# success! (maybe)
+exit 0
