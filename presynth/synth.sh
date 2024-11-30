@@ -2,7 +2,7 @@
 
 # 设置 MAX_DELAY 和 MIN_DELAY 的范围和步长
 MAX_DELAY_MIN=3.0    # MAX_DELAY 的最小值
-MAX_DELAY_MAX=22.2   # MAX_DELAY 的最大值
+MAX_DELAY_MAX=6.0   # MAX_DELAY 的最大值
 MAX_DELAY_STEP=0.2   # MAX_DELAY 的步长
 
 MIN_DELAY_MIN=0.0    # MIN_DELAY 的最小值
@@ -11,7 +11,7 @@ MIN_DELAY_STEP=0.5   # MIN_DELAY 的步长
 # 遍历 MAX_DELAY
 for MAX_DELAY in $(seq $MAX_DELAY_MIN $MAX_DELAY_STEP $MAX_DELAY_MAX); do
     # 动态计算当前 MAX_DELAY 下 MIN_DELAY 的最大值
-    CURRENT_MIN_DELAY_MAX=$(echo "$MAX_DELAY - 1.0" | bc -l)
+    CURRENT_MIN_DELAY_MAX=$(echo "$MAX_DELAY - 1.5" | bc -l)
 
     # 确保 MIN_DELAY 最大值不小于 MIN_DELAY 最小值
     if (( $(echo "$CURRENT_MIN_DELAY_MAX >= $MIN_DELAY_MIN" | bc -l) )); then
