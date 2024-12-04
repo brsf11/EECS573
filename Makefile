@@ -75,8 +75,8 @@ CMP_REF = verilog/Comparator.sv \
 
 SDF_DEFINE = -sdf typ:test_mult.DUT:synth/mult.sdf
 
-MAX_DELAY         = 5.0
-MIN_DELAY         = 1.0
+MAX_DELAY        ?= 5.0
+MIN_DELAY        ?= 1.0
 CLOCK_UNCERTAINTY = 0.1
 SETUP_TIME        = 0.47
 

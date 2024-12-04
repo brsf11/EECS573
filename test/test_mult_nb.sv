@@ -134,9 +134,9 @@ module test_mult();
         $finish();
     end
 
-    // initial begin
-    //     $dumpfile("waveform.fst");
-    //     $dumpvars(0, DUT);
-    // end
+    initial begin
+        $dumpfile("Waveform/waveform.vcd");
+        $dumpvars(0, DUT);
+    end
 
 endmodule

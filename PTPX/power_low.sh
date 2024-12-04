@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # 设置 MAX_DELAY 和 MIN_DELAY 的范围和步长
-MAX_DELAY_MIN=6.0    # MAX_DELAY 的最小值
-MAX_DELAY_MAX=20.0   # MAX_DELAY 的最大值
-MAX_DELAY_STEP=1   # MAX_DELAY 的步长
+MAX_DELAY_MIN=3.0    # MAX_DELAY 的最小值
+MAX_DELAY_MAX=5.6   # MAX_DELAY 的最大值
+MAX_DELAY_STEP=0.5   # MAX_DELAY 的步长
 
-MIN_DELAY_MIN=0.0    # MIN_DELAY 的最小值
-MIN_DELAY_STEP=1.0   # MIN_DELAY 的步长
+MIN_DELAY_MIN=0.5    # MIN_DELAY 的最小值
+MIN_DELAY_STEP=0.5   # MIN_DELAY 的步长
 
 # 遍历 MAX_DELAY
 for MAX_DELAY in $(seq $MAX_DELAY_MIN $MAX_DELAY_STEP $MAX_DELAY_MAX); do
@@ -21,7 +21,15 @@ for MAX_DELAY in $(seq $MAX_DELAY_MIN $MAX_DELAY_STEP $MAX_DELAY_MAX); do
                 # 创建目录
                 DIR_NAME="mult_${MAX_DELAY}_${MIN_DELAY}"
                 mkdir -p "$DIR_NAME"
-                MAX_DELAY="$MAX_DELAY" MIN_DELAY="$MIN_DELAY" dc_shell-t -f synth.tcl
+                cd ..
+                make nuke
+                make syn MAX_DELAY=${MAX_DELAY} MIN_DELAY=${MIN_DELAY}
+                # MAX_DELAY="$MAX_DELAY" MIN_DELAY="$MIN_DELAY" dc_shell-t -f synth.tcl
+                cp feed.txt compare.txt syn.out synth/mult.rep PTPX/mult_${MAX_DELAY}_${MIN_DELAY}
+                cd PTPX
+                make clean
+                make pp
+                mv *.rpt mult_${MAX_DELAY}_${MIN_DELAY}
             fi
         done
     fi

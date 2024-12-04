@@ -1,9 +1,7 @@
-module Comparator #(
-    parameter DATA_WIDTH = 192
-)(
-    input  logic [DATA_WIDTH-1:0] A,B,
-    output logic                  out
-);
+module Comparator (A,B,out);
+input [191:0] A;
+input [191:0] B;
+output        out;
 
     assign out = ~(A === B);
 
