@@ -1,0 +1,664 @@
+ 
+****************************************
+Report : design
+Design : Razor_pipeline
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 18:25:40 2024
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Local Link Library:
+
+    {lec25dscc25_TT.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+
+    Operating Condition Name : nom_pvt
+    Library : lec25dscc25_TT
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   2.50
+    Interconnect Model : balanced_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   tsmcwire
+Location       :   lec25dscc25_TT
+Resistance     :   0.2642
+Capacitance    :   0.000132782
+Area           :   0.27
+Slope          :   0.74
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1     0.89
+     2     1.48
+     3     2.44
+     4     3.18
+     5     3.92
+
+
+
+Wire Loading Model Mode: top.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    None Required
+
+Design Parameters:
+
+    None specified.
+1
+ 
+****************************************
+Report : area
+Design : Razor_pipeline
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 18:25:40 2024
+****************************************
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Number of ports:                          392
+Number of nets:                          1753
+Number of cells:                         1509
+Number of combinational cells:           1123
+Number of sequential cells:               386
+Number of macros/black boxes:               0
+Number of buf/inv:                        244
+Number of references:                      35
+
+Combinational area:              62042.111389
+Buf/Inv area:                    10998.374020
+Noncombinational area:           79850.188248
+Macro/Black Box area:                0.000000
+Net Interconnect area:             822.916229
+
+Total cell area:                141892.299637
+Total area:                     142715.215866
+1
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 2
+        -transition_time
+Design : Razor_pipeline
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 18:25:40 2024
+****************************************
+
+ * Some/all delay information is back-annotated.
+
+Operating Conditions: nom_pvt   Library: lec25dscc25_TT
+Wire Load Model Mode: top
+
+  Startpoint: out_data_shadow_reg[130]
+              (rising edge-triggered flip-flop clocked by clk_shadow)
+  Endpoint: out_data_reg[159]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                          Fanout     Trans      Incr       Path
+  -----------------------------------------------------------------------
+  clock clk_shadow (rise edge)                         1.70       1.70
+  clock network delay (ideal)                          0.00       1.70
+  out_data_shadow_reg[130]/CLK (dffss2)      0.00      0.00       1.70 r
+  out_data_shadow_reg[130]/QN (dffss2)       0.17      0.14       1.84 r
+  out_data_shadow[130] (net)       2                   0.00       1.84 r
+  U1279/DIN1 (xnr2s1)                        0.17      0.00       1.85 r
+  U1279/Q (xnr2s1)                           0.18      0.23       2.07 f
+  n1081 (net)                      1                   0.00       2.07 f
+  U862/DIN4 (and4s1)                         0.18      0.00       2.07 f
+  U862/Q (and4s1)                            0.14      0.24       2.31 f
+  n994 (net)                       1                   0.00       2.31 f
+  U924/DIN2 (nnd2s1)                         0.14      0.00       2.31 f
+  U924/Q (nnd2s1)                            0.18      0.08       2.39 r
+  n993 (net)                       1                   0.00       2.39 r
+  U1012/DIN2 (nor2s1)                        0.18      0.00       2.40 r
+  U1012/Q (nor2s1)                           0.23      0.10       2.50 f
+  n992 (net)                       1                   0.00       2.50 f
+  U1134/DIN1 (and4s3)                        0.23      0.00       2.50 f
+  U1134/Q (and4s3)                           0.11      0.16       2.66 f
+  n1193 (net)                      2                   0.00       2.66 f
+  U1362/DIN2 (aoi13s1)                       0.11      0.00       2.67 f
+  U1362/Q (aoi13s1)                          0.26      0.11       2.77 r
+  n1194 (net)                      1                   0.00       2.77 r
+  U1363/DIN (i1s8)                           0.26      0.00       2.77 r
+  U1363/Q (i1s8)                             0.11      0.18       2.95 f
+  n1500 (net)                      8                   0.00       2.95 f
+  U1079/DIN (i1s9)                           0.11      0.00       2.95 f
+  U1079/Q (i1s9)                             0.09      0.15       3.11 r
+  n895 (net)                      25                   0.00       3.11 r
+  U1118/DIN1 (nnd2s1)                        0.09      0.00       3.11 r
+  U1118/Q (nnd2s1)                           0.13      0.05       3.16 f
+  n1266 (net)                      1                   0.00       3.16 f
+  U1427/DIN3 (oai211s2)                      0.13      0.00       3.16 f
+  U1427/Q (oai211s2)                         0.30      0.13       3.29 r
+  n709 (net)                       1                   0.00       3.29 r
+  out_data_reg[159]/SETB (dffss2)            0.30      0.00       3.29 r
+  data arrival time                                               3.29
+
+  clock clk (rise edge)                                3.87       3.87
+  clock network delay (ideal)                          0.00       3.87
+  clock uncertainty                                   -0.10       3.77
+  out_data_reg[159]/CLK (dffss2)                       0.00       3.77 r
+  library setup time                                  -0.48       3.29
+  data required time                                              3.29
+  -----------------------------------------------------------------------
+  data required time                                              3.29
+  data arrival time                                              -3.29
+  -----------------------------------------------------------------------
+  slack (MET)                                                     0.00
+
+
+  Startpoint: out_data_shadow_reg[130]
+              (rising edge-triggered flip-flop clocked by clk_shadow)
+  Endpoint: out_data_reg[2]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                          Fanout     Trans      Incr       Path
+  -----------------------------------------------------------------------
+  clock clk_shadow (rise edge)                         1.70       1.70
+  clock network delay (ideal)                          0.00       1.70
+  out_data_shadow_reg[130]/CLK (dffss2)      0.00      0.00       1.70 r
+  out_data_shadow_reg[130]/QN (dffss2)       0.17      0.14       1.84 r
+  out_data_shadow[130] (net)       2                   0.00       1.84 r
+  U1279/DIN1 (xnr2s1)                        0.17      0.00       1.85 r
+  U1279/Q (xnr2s1)                           0.18      0.23       2.07 f
+  n1081 (net)                      1                   0.00       2.07 f
+  U862/DIN4 (and4s1)                         0.18      0.00       2.07 f
+  U862/Q (and4s1)                            0.14      0.24       2.31 f
+  n994 (net)                       1                   0.00       2.31 f
+  U924/DIN2 (nnd2s1)                         0.14      0.00       2.31 f
+  U924/Q (nnd2s1)                            0.18      0.08       2.39 r
+  n993 (net)                       1                   0.00       2.39 r
+  U1012/DIN2 (nor2s1)                        0.18      0.00       2.40 r
+  U1012/Q (nor2s1)                           0.23      0.10       2.50 f
+  n992 (net)                       1                   0.00       2.50 f
+  U1134/DIN1 (and4s3)                        0.23      0.00       2.50 f
+  U1134/Q (and4s3)                           0.11      0.16       2.66 f
+  n1193 (net)                      2                   0.00       2.66 f
+  U1362/DIN2 (aoi13s1)                       0.11      0.00       2.67 f
+  U1362/Q (aoi13s1)                          0.26      0.11       2.77 r
+  n1194 (net)                      1                   0.00       2.77 r
+  U1363/DIN (i1s8)                           0.26      0.00       2.77 r
+  U1363/Q (i1s8)                             0.11      0.18       2.95 f
+  n1500 (net)                      8                   0.00       2.95 f
+  U1078/DIN (i1s9)                           0.11      0.00       2.95 f
+  U1078/Q (i1s9)                             0.09      0.15       3.11 r
+  n894 (net)                      26                   0.00       3.11 r
+  U1196/DIN1 (nnd2s1)                        0.09      0.00       3.11 r
+  U1196/Q (nnd2s1)                           0.13      0.05       3.16 f
+  n1733 (net)                      1                   0.00       3.16 f
+  U1902/DIN3 (oai211s2)                      0.13      0.00       3.16 f
+  U1902/Q (oai211s2)                         0.30      0.13       3.29 r
+  n743 (net)                       1                   0.00       3.29 r
+  out_data_reg[2]/SETB (dffss2)              0.30      0.00       3.29 r
+  data arrival time                                               3.29
+
+  clock clk (rise edge)                                3.87       3.87
+  clock network delay (ideal)                          0.00       3.87
+  clock uncertainty                                   -0.10       3.77
+  out_data_reg[2]/CLK (dffss2)                         0.00       3.77 r
+  library setup time                                  -0.48       3.29
+  data required time                                              3.29
+  -----------------------------------------------------------------------
+  data required time                                              3.29
+  data arrival time                                              -3.29
+  -----------------------------------------------------------------------
+  slack (MET)                                                     0.00
+
+
+  Startpoint: rst_n (input port clocked by clk)
+  Endpoint: out_data_shadow_reg[108]
+            (rising edge-triggered flip-flop clocked by clk_shadow)
+  Path Group: input_grp
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                          Fanout     Trans      Incr       Path
+  -----------------------------------------------------------------------
+  clock clk (rise edge)                                0.00       0.00
+  clock network delay (ideal)                          0.00       0.00
+  input external delay                                 0.10       0.10 r
+  rst_n (in)                                 0.00      0.00       0.10 r
+  rst_n (net)                      1                   0.00       0.10 r
+  U852/DIN (i1s5)                            0.00      0.00       0.10 r
+  U852/Q (i1s5)                              0.12      0.06       0.16 f
+  n1827 (net)                     25                   0.00       0.16 f
+  U849/DIN (ib1s1)                           0.12      0.00       0.17 f
+  U849/Q (ib1s1)                             0.36      0.15       0.31 r
+  n890 (net)                       7                   0.00       0.31 r
+  U902/DIN (hib1s1)                          0.36      0.00       0.31 r
+  U902/Q (hib1s1)                            1.05      0.52       0.83 f
+  n1822 (net)                     19                   0.00       0.83 f
+  out_data_shadow_reg[108]/DIN (dffss2)      1.05      0.00       0.83 f
+  data arrival time                                               0.83
+
+  clock clk_shadow (rise edge)                         1.70       1.70
+  clock network delay (ideal)                          0.00       1.70
+  clock uncertainty                                   -0.10       1.60
+  out_data_shadow_reg[108]/CLK (dffss2)                0.00       1.60 r
+  library setup time                                  -0.68       0.92
+  data required time                                              0.92
+  -----------------------------------------------------------------------
+  data required time                                              0.92
+  data arrival time                                              -0.83
+  -----------------------------------------------------------------------
+  slack (MET)                                                     0.09
+
+
+  Startpoint: rst_n (input port clocked by clk)
+  Endpoint: out_data_shadow_reg[105]
+            (rising edge-triggered flip-flop clocked by clk_shadow)
+  Path Group: input_grp
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                          Fanout     Trans      Incr       Path
+  -----------------------------------------------------------------------
+  clock clk (rise edge)                                0.00       0.00
+  clock network delay (ideal)                          0.00       0.00
+  input external delay                                 0.10       0.10 r
+  rst_n (in)                                 0.00      0.00       0.10 r
+  rst_n (net)                      1                   0.00       0.10 r
+  U852/DIN (i1s5)                            0.00      0.00       0.10 r
+  U852/Q (i1s5)                              0.12      0.06       0.16 f
+  n1827 (net)                     25                   0.00       0.16 f
+  U849/DIN (ib1s1)                           0.12      0.00       0.17 f
+  U849/Q (ib1s1)                             0.36      0.15       0.31 r
+  n890 (net)                       7                   0.00       0.31 r
+  U902/DIN (hib1s1)                          0.36      0.00       0.31 r
+  U902/Q (hib1s1)                            1.05      0.52       0.83 f
+  n1822 (net)                     19                   0.00       0.83 f
+  out_data_shadow_reg[105]/DIN (dffss2)      1.05      0.00       0.83 f
+  data arrival time                                               0.83
+
+  clock clk_shadow (rise edge)                         1.70       1.70
+  clock network delay (ideal)                          0.00       1.70
+  clock uncertainty                                   -0.10       1.60
+  out_data_shadow_reg[105]/CLK (dffss2)                0.00       1.60 r
+  library setup time                                  -0.68       0.92
+  data required time                                              0.92
+  -----------------------------------------------------------------------
+  data required time                                              0.92
+  data arrival time                                              -0.83
+  -----------------------------------------------------------------------
+  slack (MET)                                                     0.09
+
+
+  Startpoint: out_data_reg[16]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mismatch (output port clocked by clk)
+  Path Group: output_grp
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                        Fanout     Trans      Incr       Path
+  ---------------------------------------------------------------------
+  out_data_reg[16]/CLK (dffss2)            0.00      0.00       0.00 r
+  out_data_reg[16]/QN (dffss2)             0.28      0.24       0.24 f
+  out_data[16] (net)             2                   0.00       0.24 f
+  out_data_reg[16]/Q (dffss2)              0.10      0.05       0.29 r
+  n900 (net)                     1                   0.00       0.29 r
+  U1060/DIN (i1s1)                         0.10      0.00       0.29 r
+  U1060/Q (i1s1)                           0.33      0.16       0.45 f
+  n901 (net)                     1                   0.00       0.45 f
+  U1315/DIN2 (xnr2s2)                      0.33      0.01       0.46 f
+  U1315/Q (xnr2s2)                         0.16      0.22       0.69 f
+  n1125 (net)                    1                   0.00       0.69 f
+  U1261/DIN2 (and4s3)                      0.16      0.00       0.69 f
+  U1261/Q (and4s3)                         0.10      0.18       0.86 f
+  n1075 (net)                    1                   0.00       0.86 f
+  U1107/DIN3 (and4s3)                      0.10      0.00       0.87 f
+  U1107/Q (and4s3)                         0.10      0.12       0.98 f
+  n938 (net)                     1                   0.00       0.98 f
+  U1105/DIN1 (and4s3)                      0.10      0.00       0.99 f
+  U1105/Q (and4s3)                         0.10      0.14       1.12 f
+  n1045 (net)                    1                   0.00       1.12 f
+  U1139/DIN3 (and4s3)                      0.10      0.00       1.12 f
+  U1139/Q (and4s3)                         0.11      0.12       1.25 f
+  n1191 (net)                    2                   0.00       1.25 f
+  U1362/DIN4 (aoi13s1)                     0.11      0.00       1.25 f
+  U1362/Q (aoi13s1)                        0.26      0.13       1.39 r
+  n1194 (net)                    1                   0.00       1.39 r
+  U1363/DIN (i1s8)                         0.26      0.00       1.39 r
+  U1363/Q (i1s8)                           0.11      0.18       1.56 f
+  n1500 (net)                    8                   0.00       1.56 f
+  U1077/DIN (hi1s1)                        0.11      0.00       1.57 f
+  U1077/Q (hi1s1)                          1.90      0.72       2.28 r
+  mismatch (net)                 1                   0.00       2.28 r
+  mismatch (out)                           1.90      0.02       2.31 r
+  data arrival time                                             2.31
+
+  max_delay                                          3.87       3.87
+  clock uncertainty                                 -0.10       3.77
+  output external delay                             -0.10       3.67
+  data required time                                            3.67
+  ---------------------------------------------------------------------
+  data required time                                            3.67
+  data arrival time                                            -2.31
+  ---------------------------------------------------------------------
+  slack (MET)                                                   1.36
+
+
+  Startpoint: out_data_reg[16]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: out_vld (output port clocked by clk)
+  Path Group: output_grp
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                        Fanout     Trans      Incr       Path
+  ---------------------------------------------------------------------
+  out_data_reg[16]/CLK (dffss2)            0.00      0.00       0.00 r
+  out_data_reg[16]/QN (dffss2)             0.28      0.24       0.24 f
+  out_data[16] (net)             2                   0.00       0.24 f
+  out_data_reg[16]/Q (dffss2)              0.10      0.05       0.29 r
+  n900 (net)                     1                   0.00       0.29 r
+  U1060/DIN (i1s1)                         0.10      0.00       0.29 r
+  U1060/Q (i1s1)                           0.33      0.16       0.45 f
+  n901 (net)                     1                   0.00       0.45 f
+  U1315/DIN2 (xnr2s2)                      0.33      0.01       0.46 f
+  U1315/Q (xnr2s2)                         0.16      0.22       0.69 f
+  n1125 (net)                    1                   0.00       0.69 f
+  U1261/DIN2 (and4s3)                      0.16      0.00       0.69 f
+  U1261/Q (and4s3)                         0.10      0.18       0.86 f
+  n1075 (net)                    1                   0.00       0.86 f
+  U1107/DIN3 (and4s3)                      0.10      0.00       0.87 f
+  U1107/Q (and4s3)                         0.10      0.12       0.98 f
+  n938 (net)                     1                   0.00       0.98 f
+  U1105/DIN1 (and4s3)                      0.10      0.00       0.99 f
+  U1105/Q (and4s3)                         0.10      0.14       1.12 f
+  n1045 (net)                    1                   0.00       1.12 f
+  U1139/DIN3 (and4s3)                      0.10      0.00       1.12 f
+  U1139/Q (and4s3)                         0.11      0.12       1.25 f
+  n1191 (net)                    2                   0.00       1.25 f
+  U1362/DIN4 (aoi13s1)                     0.11      0.00       1.25 f
+  U1362/Q (aoi13s1)                        0.26      0.13       1.39 r
+  n1194 (net)                    1                   0.00       1.39 r
+  U1363/DIN (i1s8)                         0.26      0.00       1.39 r
+  U1363/Q (i1s8)                           0.11      0.18       1.56 f
+  n1500 (net)                    8                   0.00       1.56 f
+  U1214/DIN (i1s9)                         0.11      0.00       1.57 f
+  U1214/Q (i1s9)                           0.10      0.16       1.73 r
+  n1031 (net)                   27                   0.00       1.73 r
+  U905/DIN2 (oai21s2)                      0.10      0.00       1.73 r
+  U905/Q (oai21s2)                         0.98      0.41       2.14 f
+  out_vld (net)                  1                   0.00       2.14 f
+  out_vld (out)                            0.98      0.02       2.16 f
+  data arrival time                                             2.16
+
+  max_delay                                          3.87       3.87
+  clock uncertainty                                 -0.10       3.77
+  output external delay                             -0.10       3.67
+  data required time                                            3.67
+  ---------------------------------------------------------------------
+  data required time                                            3.67
+  data arrival time                                            -2.16
+  ---------------------------------------------------------------------
+  slack (MET)                                                   1.51
+
+
+1
+ 
+****************************************
+Report : constraint
+        -verbose
+        -max_delay
+Design : Razor_pipeline
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 18:25:40 2024
+****************************************
+
+
+  Startpoint: out_data_shadow_reg[130]
+              (rising edge-triggered flip-flop clocked by clk_shadow)
+  Endpoint: out_data_reg[159]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                                      Incr       Path
+  -------------------------------------------------------------
+  clock clk_shadow (rise edge)               1.70       1.70
+  clock network delay (ideal)                0.00       1.70
+  out_data_shadow_reg[130]/CLK (dffss2)      0.00       1.70 r
+  out_data_shadow_reg[130]/QN (dffss2)       0.14       1.84 r
+  U1279/Q (xnr2s1)                           0.23       2.07 f
+  U862/Q (and4s1)                            0.24       2.31 f
+  U924/Q (nnd2s1)                            0.09       2.39 r
+  U1012/Q (nor2s1)                           0.10       2.50 f
+  U1134/Q (and4s3)                           0.17       2.66 f
+  U1362/Q (aoi13s1)                          0.11       2.77 r
+  U1363/Q (i1s8)                             0.18       2.95 f
+  U1079/Q (i1s9)                             0.16       3.11 r
+  U1118/Q (nnd2s1)                           0.05       3.16 f
+  U1427/Q (oai211s2)                         0.13       3.29 r
+  out_data_reg[159]/SETB (dffss2)            0.00       3.29 r
+  data arrival time                                     3.29
+
+  clock clk (rise edge)                      3.87       3.87
+  clock network delay (ideal)                0.00       3.87
+  clock uncertainty                         -0.10       3.77
+  out_data_reg[159]/CLK (dffss2)             0.00       3.77 r
+  library setup time                        -0.48       3.29
+  data required time                                    3.29
+  -------------------------------------------------------------
+  data required time                                    3.29
+  data arrival time                                    -3.29
+  -------------------------------------------------------------
+  slack (MET)                                           0.00
+
+
+  Startpoint: rst_n (input port clocked by clk)
+  Endpoint: out_data_shadow_reg[105]
+            (rising edge-triggered flip-flop clocked by clk_shadow)
+  Path Group: input_grp
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                                      Incr       Path
+  -------------------------------------------------------------
+  clock clk (rise edge)                      0.00       0.00
+  clock network delay (ideal)                0.00       0.00
+  input external delay                       0.10       0.10 r
+  rst_n (in)                                 0.00       0.10 r
+  U852/Q (i1s5)                              0.06       0.16 f
+  U849/Q (ib1s1)                             0.15       0.31 r
+  U902/Q (hib1s1)                            0.52       0.83 f
+  out_data_shadow_reg[105]/DIN (dffss2)      0.00       0.83 f
+  data arrival time                                     0.83
+
+  clock clk_shadow (rise edge)               1.70       1.70
+  clock network delay (ideal)                0.00       1.70
+  clock uncertainty                         -0.10       1.60
+  out_data_shadow_reg[105]/CLK (dffss2)      0.00       1.60 r
+  library setup time                        -0.68       0.92
+  data required time                                    0.92
+  -------------------------------------------------------------
+  data required time                                    0.92
+  data arrival time                                    -0.83
+  -------------------------------------------------------------
+  slack (MET)                                           0.09
+
+
+  Startpoint: out_data_reg[16]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: mismatch (output port clocked by clk)
+  Path Group: output_grp
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Razor_pipeline     tsmcwire              lec25dscc25_TT
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  out_data_reg[16]/CLK (dffss2)            0.00       0.00 r
+  out_data_reg[16]/QN (dffss2)             0.24       0.24 f
+  out_data_reg[16]/Q (dffss2)              0.05       0.29 r
+  U1060/Q (i1s1)                           0.16       0.45 f
+  U1315/Q (xnr2s2)                         0.23       0.69 f
+  U1261/Q (and4s3)                         0.18       0.86 f
+  U1107/Q (and4s3)                         0.12       0.98 f
+  U1105/Q (and4s3)                         0.14       1.12 f
+  U1139/Q (and4s3)                         0.13       1.25 f
+  U1362/Q (aoi13s1)                        0.14       1.39 r
+  U1363/Q (i1s8)                           0.18       1.56 f
+  U1077/Q (hi1s1)                          0.72       2.28 r
+  mismatch (out)                           0.02       2.31 r
+  data arrival time                                   2.31
+
+  max_delay                                3.87       3.87
+  clock uncertainty                       -0.10       3.77
+  output external delay                   -0.10       3.67
+  data required time                                  3.67
+  -----------------------------------------------------------
+  data required time                                  3.67
+  data arrival time                                  -2.31
+  -----------------------------------------------------------
+  slack (MET)                                         1.36
+
+
+1
+ 
+****************************************
+Report : resources
+Design : Razor_pipeline
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 18:25:40 2024
+****************************************
+
+
+No resource sharing information to report.
+
+No implementations to report
+1
+Information: Updating graph... (UID-83)
+ 
+****************************************
+Report : reference
+Design : Razor_pipeline
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 18:25:40 2024
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+and2s1             lec25dscc25_TT    49.766399       3   149.299198
+and4s1             lec25dscc25_TT    74.649597      12   895.795166
+and4s2             lec25dscc25_TT   124.416000       1   124.416000
+and4s3             lec25dscc25_TT   124.416000      29  3608.064011
+aoi13s1            lec25dscc25_TT    58.060799       1    58.060799
+dffs1              lec25dscc25_TT   157.593994       2   315.187988 n
+dffs2              lec25dscc25_TT   174.182007       3   522.546021 n
+dffscs2            lec25dscc25_TT   215.654007       1   215.654007 n
+dffss2             lec25dscc25_TT   207.360001     380 78796.800232 n
+hi1s1              lec25dscc25_TT    33.177601     196  6502.809769
+hib1s1             lec25dscc25_TT    49.766399       1    49.766399
+i1s1               lec25dscc25_TT    33.177601       9   298.598408
+i1s2               lec25dscc25_TT    41.472000       1    41.472000
+i1s5               lec25dscc25_TT    49.766399       1    49.766399
+i1s8               lec25dscc25_TT   199.065994       7  1393.461960
+i1s9               lec25dscc25_TT   215.654007       6  1293.924042
+ib1s1              lec25dscc25_TT    33.177601      14   464.486412
+ib1s6              lec25dscc25_TT   107.827003       5   539.135017
+nb1s7              lec25dscc25_TT    91.238403       4   364.953613
+nnd2s1             lec25dscc25_TT    41.472000     370 15344.640045
+nnd2s2             lec25dscc25_TT    41.472000      33  1368.576004
+nnd3s1             lec25dscc25_TT    49.766399       2    99.532799
+nnd3s2             lec25dscc25_TT    49.766399       4   199.065598
+nnd4s1             lec25dscc25_TT    58.060799       6   348.364792
+nor2s1             lec25dscc25_TT    41.472000      28  1161.216003
+nor2s2             lec25dscc25_TT    58.060799       5   290.303993
+nor2s3             lec25dscc25_TT    74.649597       1    74.649597
+oai21s2            lec25dscc25_TT    49.766399       1    49.766399
+oai211s1           lec25dscc25_TT    58.060799      13   754.790382
+oai211s2           lec25dscc25_TT    58.060799     177 10276.761360
+or2s1              lec25dscc25_TT    49.766399       1    49.766399
+xnr2s1             lec25dscc25_TT    82.944000      98  8128.512024
+xnr2s2             lec25dscc25_TT    99.532799       4   398.131195
+xor2s1             lec25dscc25_TT    82.944000      78  6469.632019
+xor2s2             lec25dscc25_TT    99.532799      12  1194.393585
+-----------------------------------------------------------------------------
+Total 35 references                                 141892.299637
+1

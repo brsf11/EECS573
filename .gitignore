@@ -18,9 +18,9 @@ csrc/
 urgReport/
 
 # synthesis files
-*.vg
-*.rep
-*.ddc
+# *.vg
+# *.rep
+# *.ddc
 *.chk
 *.log
 *.syn
@@ -60,6 +60,6 @@ cksum_dir/
 # presynth/mult*/
 # presynth/Comparator*/
 
-*.sdf
-*.sdc
-*.ddb
+# *.sdf
+# *.sdc
+# *.ddb

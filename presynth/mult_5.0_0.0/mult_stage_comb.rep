@@ -1,0 +1,344 @@
+ 
+****************************************
+Report : design
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Thu Nov 28 20:11:32 2024
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Local Link Library:
+
+    {lec25dscc25_TT.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+
+    Operating Condition Name : nom_pvt
+    Library : lec25dscc25_TT
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   2.50
+    Interconnect Model : balanced_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   tsmcwire
+Location       :   lec25dscc25_TT
+Resistance     :   0.2642
+Capacitance    :   0.000132782
+Area           :   0.27
+Slope          :   0.74
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1     0.89
+     2     1.48
+     3     2.44
+     4     3.18
+     5     3.92
+
+
+
+Wire Loading Model Mode: top.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    DesignWare
+
+Design Parameters:
+
+    None specified.
+1
+ 
+****************************************
+Report : area
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Thu Nov 28 20:11:32 2024
+****************************************
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Number of ports:                          384
+Number of nets:                          3316
+Number of cells:                         2903
+Number of combinational cells:           2871
+Number of sequential cells:                 0
+Number of macros/black boxes:               0
+Number of buf/inv:                        430
+Number of references:                      44
+
+Combinational area:             189854.265995
+Buf/Inv area:                    17849.545887
+Noncombinational area:               0.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:            1617.321300
+
+Total cell area:                189854.265995
+Total area:                     191471.587295
+1
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 1
+        -transition_time
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Thu Nov 28 20:11:32 2024
+****************************************
+
+Operating Conditions: nom_pvt   Library: lec25dscc25_TT
+Wire Load Model Mode: top
+
+  Startpoint: mcand[1] (input port)
+  Endpoint: product_sum[53]
+            (output port)
+  Path Group: default
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  mult_stage_comb    tsmcwire              lec25dscc25_TT
+
+  Point                        Fanout     Trans      Incr       Path
+  ---------------------------------------------------------------------
+  input external delay                               0.00       0.00 r
+  mcand[1] (in)                            0.00      0.00       0.00 r
+  shifted_mcand[17] (net)       22                   0.00       0.00 r
+  U735/DIN2 (nnd2s1)                       0.00      0.00       0.00 r
+  U735/Q (nnd2s1)                          0.28      0.13       0.13 f
+  n498 (net)                     4                   0.00       0.13 f
+  U220/DIN (i1s2)                          0.28      0.00       0.13 f
+  U220/Q (i1s2)                            0.13      0.06       0.19 r
+  n145 (net)                     1                   0.00       0.19 r
+  U739/DIN2 (aoi21s1)                      0.13      0.00       0.19 r
+  U739/Q (aoi21s1)                         0.31      0.16       0.35 f
+  n395 (net)                     2                   0.00       0.35 f
+  U746/DIN2 (oai211s2)                     0.31      0.00       0.35 f
+  U746/Q (oai211s2)                        0.40      0.18       0.53 r
+  n178 (net)                     2                   0.00       0.53 r
+  U775/DIN1 (aoi21s1)                      0.40      0.00       0.54 r
+  U775/Q (aoi21s1)                         0.41      0.21       0.75 f
+  n1092 (net)                    2                   0.00       0.75 f
+  U205/DIN (i1s3)                          0.41      0.00       0.75 f
+  U205/Q (i1s3)                            0.28      0.14       0.90 r
+  n1036 (net)                    9                   0.00       0.90 r
+  U900/DIN2 (aoi21s1)                      0.28      0.00       0.90 r
+  U900/Q (aoi21s1)                         0.46      0.24       1.13 f
+  n332 (net)                     2                   0.00       1.13 f
+  U185/DIN2 (xnr2s1)                       0.46      0.01       1.14 f
+  U185/Q (xnr2s1)                          0.28      0.35       1.48 f
+  n68 (net)                      5                   0.00       1.48 f
+  U1431/DIN2 (oai21s1)                     0.28      0.00       1.48 f
+  U1431/Q (oai21s1)                        0.39      0.17       1.65 r
+  n947 (net)                     1                   0.00       1.65 r
+  U1432/DIN2 (xor2s1)                      0.39      0.00       1.65 r
+  U1432/Q (xor2s1)                         0.14      0.19       1.85 f
+  n952 (net)                     1                   0.00       1.85 f
+  U1437/CIN (fadd1s1)                      0.14      0.00       1.85 f
+  U1437/OUTS (fadd1s1)                     0.36      0.50       2.35 r
+  n959 (net)                     3                   0.00       2.35 r
+  U232/DIN (ib1s1)                         0.36      0.00       2.36 r
+  U232/Q (ib1s1)                           0.23      0.12       2.47 f
+  n948 (net)                     1                   0.00       2.47 f
+  U197/DIN2 (xnr2s1)                       0.23      0.01       2.48 f
+  U197/Q (xnr2s1)                          0.17      0.25       2.73 f
+  n949 (net)                     1                   0.00       2.73 f
+  U341/DIN2 (xor2s1)                       0.17      0.00       2.73 f
+  U341/Q (xor2s1)                          0.16      0.18       2.91 f
+  n1014 (net)                    1                   0.00       2.91 f
+  U1489/CIN (fadd1s1)                      0.16      0.00       2.92 f
+  U1489/OUTS (fadd1s1)                     0.30      0.48       3.40 r
+  n1187 (net)                    2                   0.00       3.40 r
+  U518/DIN2 (nor2s1)                       0.30      0.00       3.40 r
+  U518/Q (nor2s1)                          0.29      0.15       3.55 f
+  n2989 (net)                    3                   0.00       3.55 f
+  U1625/DIN1 (oai21s1)                     0.29      0.00       3.55 f
+  U1625/Q (oai21s1)                        0.43      0.20       3.75 r
+  n2924 (net)                    2                   0.00       3.75 r
+  U1629/DIN1 (aoi21s1)                     0.43      0.00       3.75 r
+  U1629/Q (aoi21s1)                        0.36      0.19       3.94 f
+  n2914 (net)                    3                   0.00       3.94 f
+  U1637/DIN2 (oai21s1)                     0.36      0.00       3.94 f
+  U1637/Q (oai21s1)                        0.35      0.16       4.11 r
+  n1206 (net)                    1                   0.00       4.11 r
+  U1638/DIN3 (aoi21s1)                     0.35      0.00       4.11 r
+  U1638/Q (aoi21s1)                        0.30      0.14       4.25 f
+  n2760 (net)                    2                   0.00       4.25 f
+  U486/DIN1 (or2s1)                        0.30      0.00       4.25 f
+  U486/Q (or2s1)                           0.18      0.23       4.48 f
+  n1937 (net)                    1                   0.00       4.48 f
+  U271/DIN1 (nnd2s3)                       0.18      0.01       4.48 f
+  U271/Q (nnd2s3)                          0.39      0.15       4.63 r
+  n1938 (net)                   14                   0.00       4.63 r
+  U2743/DIN1 (nnd2s1)                      0.39      0.00       4.63 r
+  U2743/Q (nnd2s1)                         0.19      0.08       4.71 f
+  n2702 (net)                    1                   0.00       4.71 f
+  U2745/DIN1 (nnd2s1)                      0.19      0.00       4.71 f
+  U2745/Q (nnd2s1)                         0.23      0.08       4.78 r
+  n2707 (net)                    1                   0.00       4.78 r
+  U2747/DIN1 (xnr2s1)                      0.23      0.00       4.78 r
+  U2747/Q (xnr2s1)                         0.14      0.22       5.00 f
+  product_sum[53] (net)          1                   0.00       5.00 f
+  product_sum[53] (out)                    0.14      0.00       5.00 f
+  data arrival time                                             5.00
+
+  max_delay                                          5.00       5.00
+  output external delay                              0.00       5.00
+  data required time                                            5.00
+  ---------------------------------------------------------------------
+  data required time                                            5.00
+  data arrival time                                            -5.00
+  ---------------------------------------------------------------------
+  slack (MET)                                                   0.00
+
+
+1
+ 
+****************************************
+Report : constraint
+        -verbose
+        -max_delay
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Thu Nov 28 20:11:32 2024
+****************************************
+
+
+  Startpoint: mcand[1] (input port)
+  Endpoint: product_sum[53]
+            (output port)
+  Path Group: default
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  mult_stage_comb    tsmcwire              lec25dscc25_TT
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  input external delay                     0.00       0.00 r
+  mcand[1] (in)                            0.00       0.00 r
+  U735/Q (nnd2s1)                          0.13       0.13 f
+  U220/Q (i1s2)                            0.06       0.19 r
+  U739/Q (aoi21s1)                         0.16       0.35 f
+  U746/Q (oai211s2)                        0.18       0.53 r
+  U775/Q (aoi21s1)                         0.21       0.75 f
+  U205/Q (i1s3)                            0.15       0.90 r
+  U900/Q (aoi21s1)                         0.24       1.13 f
+  U185/Q (xnr2s1)                          0.35       1.48 f
+  U1431/Q (oai21s1)                        0.17       1.65 r
+  U1432/Q (xor2s1)                         0.19       1.85 f
+  U1437/OUTS (fadd1s1)                     0.51       2.35 r
+  U232/Q (ib1s1)                           0.12       2.47 f
+  U197/Q (xnr2s1)                          0.26       2.73 f
+  U341/Q (xor2s1)                          0.18       2.91 f
+  U1489/OUTS (fadd1s1)                     0.49       3.40 r
+  U518/Q (nor2s1)                          0.15       3.55 f
+  U1625/Q (oai21s1)                        0.20       3.75 r
+  U1629/Q (aoi21s1)                        0.19       3.94 f
+  U1637/Q (oai21s1)                        0.17       4.11 r
+  U1638/Q (aoi21s1)                        0.14       4.25 f
+  U486/Q (or2s1)                           0.23       4.48 f
+  U271/Q (nnd2s3)                          0.15       4.63 r
+  U2743/Q (nnd2s1)                         0.08       4.71 f
+  U2745/Q (nnd2s1)                         0.08       4.78 r
+  U2747/Q (xnr2s1)                         0.22       5.00 f
+  product_sum[53] (out)                    0.00       5.00 f
+  data arrival time                                   5.00
+
+  max_delay                                5.00       5.00
+  output external delay                    0.00       5.00
+  data required time                                  5.00
+  -----------------------------------------------------------
+  data required time                                  5.00
+  data arrival time                                  -5.00
+  -----------------------------------------------------------
+  slack (MET)                                         0.00
+
+
+1
+ 
+****************************************
+Report : resources
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Thu Nov 28 20:11:32 2024
+****************************************
+
+
+Resource Report for this hierarchy in file ../verilog/mult_stage_comb.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| DP_OP_5J1_122_5202              |            |                            |
+|                | DP_OP_5J1_122_5202 |        |                            |
+=============================================================================
+
+Datapath Report for DP_OP_5J1_122_5202
+==============================================================================
+| Cell                 | Contained Operations                                |
+==============================================================================
+| DP_OP_5J1_122_5202   | mult_18 (mult_stage_comb.sv:18)                     |
+|                      | add_21 (mult_stage_comb.sv:21)                      |
+==============================================================================
+
+==============================================================================
+|       |      | Data     |       |                                          |
+| Var   | Type | Class    | Width | Expression                               |
+==============================================================================
+| I1    | PI   | Unsigned | 16    |                                          |
+| I2    | PI   | Unsigned | 64    |                                          |
+| I3    | PI   | Unsigned | 64    |                                          |
+| T0    | IFO  | Unsigned | 64    | I1 * I2 (mult_stage_comb.sv:18)          |
+| O1    | PO   | Unsigned | 64    | I3 + T0 (mult_stage_comb.sv:21)          |
+==============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| DP_OP_5J1_122_5202 | DP_OP_5J1_122_5202 | str (area,speed) |                |
+|                    |                  | mult_arch: benc_radix8              |
+===============================================================================
+
+1

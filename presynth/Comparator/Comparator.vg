@@ -1,0 +1,304 @@
+/////////////////////////////////////////////////////////////
+// Created by: Synopsys DC Ultra(TM) in wire load mode
+// Version   : V-2023.12-SP5
+// Date      : Fri Nov 29 20:34:41 2024
+/////////////////////////////////////////////////////////////
+
+
+module Comparator ( A, B, out );
+  input [191:0] A;
+  input [191:0] B;
+  output out;
+  wire   n256, n257, n258, n259, n260, n261, n262, n263, n264, n265, n266,
+         n267, n268, n269, n270, n271, n272, n273, n274, n275, n276, n277,
+         n278, n279, n280, n281, n282, n283, n284, n285, n286, n287, n288,
+         n289, n290, n291, n292, n293, n294, n295, n296, n297, n298, n299,
+         n300, n301, n302, n303, n304, n305, n306, n307, n308, n309, n310,
+         n311, n312, n313, n314, n315, n316, n317, n318, n319, n320, n321,
+         n322, n323, n324, n325, n326, n327, n328, n329, n330, n331, n332,
+         n333, n334, n335, n336, n337, n338, n339, n340, n341, n342, n343,
+         n344, n345, n346, n347, n348, n349, n350, n351, n352, n353, n354,
+         n355, n356, n357, n358, n359, n360, n361, n362, n363, n364, n365,
+         n366, n367, n368, n369, n370, n371, n372, n373, n374, n375, n376,
+         n377, n378, n379, n380, n381, n382, n383, n384, n385, n386, n387,
+         n388, n389, n390, n391, n392, n393, n394, n395, n396, n397, n398,
+         n399, n400, n401, n402, n403, n404, n405, n406, n407, n408, n409,
+         n410, n411, n412, n413, n414, n415, n416, n417, n418, n419, n420,
+         n421, n422, n423, n424, n425, n426, n427, n428, n429, n430, n431,
+         n432, n433, n434, n435, n436, n437, n438, n439, n440, n441, n442,
+         n443, n444, n445, n446, n447, n448, n449, n450, n451, n452, n453,
+         n454, n455, n456, n457, n458, n459, n460, n461, n462, n463, n464,
+         n465, n466, n467, n468, n469, n470, n471, n472, n473, n474, n475,
+         n476, n477, n478, n479, n480, n481, n482, n483, n484, n485, n486,
+         n487, n488, n489, n490, n491, n492, n493, n494, n495, n496, n497,
+         n498, n499, n500, n501, n502, n503, n504, n505, n506, n507, n508,
+         n509, n510;
+
+  hadd1s1 U257 ( .AIN(A[119]), .BIN(B[119]), .OUTS(n259) );
+  hadd1s1 U258 ( .AIN(A[122]), .BIN(B[122]), .OUTS(n258) );
+  hadd1s1 U259 ( .AIN(A[112]), .BIN(B[112]), .OUTS(n257) );
+  hadd1s1 U260 ( .AIN(A[76]), .BIN(B[76]), .OUTS(n256) );
+  or4s1 U261 ( .DIN1(n259), .DIN2(n258), .DIN3(n257), .DIN4(n256), .Q(n275) );
+  hadd1s1 U262 ( .AIN(A[124]), .BIN(B[124]), .OUTS(n274) );
+  hadd1s1 U263 ( .AIN(A[114]), .BIN(B[114]), .OUTS(n273) );
+  hadd1s1 U264 ( .AIN(A[125]), .BIN(B[125]), .OUTS(n262) );
+  hadd1s1 U265 ( .AIN(A[123]), .BIN(B[123]), .OUTS(n261) );
+  hadd1s1 U266 ( .AIN(A[75]), .BIN(B[75]), .OUTS(n260) );
+  or3s1 U267 ( .DIN1(n262), .DIN2(n261), .DIN3(n260), .Q(n272) );
+  hadd1s1 U268 ( .AIN(A[116]), .BIN(B[116]), .OUTS(n266) );
+  hadd1s1 U269 ( .AIN(A[113]), .BIN(B[113]), .OUTS(n265) );
+  hadd1s1 U270 ( .AIN(A[115]), .BIN(B[115]), .OUTS(n264) );
+  hadd1s1 U271 ( .AIN(A[121]), .BIN(B[121]), .OUTS(n263) );
+  or4s1 U272 ( .DIN1(n266), .DIN2(n265), .DIN3(n264), .DIN4(n263), .Q(n271) );
+  hadd1s1 U273 ( .AIN(A[90]), .BIN(B[90]), .OUTS(n269) );
+  hadd1s1 U274 ( .AIN(A[118]), .BIN(B[118]), .OUTS(n268) );
+  hadd1s1 U275 ( .AIN(A[127]), .BIN(B[127]), .OUTS(n267) );
+  or3s1 U276 ( .DIN1(n269), .DIN2(n268), .DIN3(n267), .Q(n270) );
+  nor6s1 U277 ( .DIN1(n275), .DIN2(n274), .DIN3(n273), .DIN4(n272), .DIN5(n271), .DIN6(n270), .Q(n339) );
+  hadd1s1 U278 ( .AIN(A[120]), .BIN(B[120]), .OUTS(n279) );
+  hadd1s1 U279 ( .AIN(A[68]), .BIN(B[68]), .OUTS(n278) );
+  hadd1s1 U280 ( .AIN(A[108]), .BIN(B[108]), .OUTS(n277) );
+  hadd1s1 U281 ( .AIN(A[66]), .BIN(B[66]), .OUTS(n276) );
+  or4s1 U282 ( .DIN1(n279), .DIN2(n278), .DIN3(n277), .DIN4(n276), .Q(n295) );
+  hadd1s1 U283 ( .AIN(A[21]), .BIN(B[21]), .OUTS(n294) );
+  hadd1s1 U284 ( .AIN(A[64]), .BIN(B[64]), .OUTS(n293) );
+  hadd1s1 U285 ( .AIN(A[77]), .BIN(B[77]), .OUTS(n282) );
+  hadd1s1 U286 ( .AIN(A[79]), .BIN(B[79]), .OUTS(n281) );
+  hadd1s1 U287 ( .AIN(A[70]), .BIN(B[70]), .OUTS(n280) );
+  or3s1 U288 ( .DIN1(n282), .DIN2(n281), .DIN3(n280), .Q(n292) );
+  hadd1s1 U289 ( .AIN(A[67]), .BIN(B[67]), .OUTS(n286) );
+  hadd1s1 U290 ( .AIN(A[65]), .BIN(B[65]), .OUTS(n285) );
+  hadd1s1 U291 ( .AIN(A[78]), .BIN(B[78]), .OUTS(n284) );
+  hadd1s1 U292 ( .AIN(A[117]), .BIN(B[117]), .OUTS(n283) );
+  or4s1 U293 ( .DIN1(n286), .DIN2(n285), .DIN3(n284), .DIN4(n283), .Q(n291) );
+  hadd1s1 U294 ( .AIN(A[72]), .BIN(B[72]), .OUTS(n289) );
+  hadd1s1 U295 ( .AIN(A[74]), .BIN(B[74]), .OUTS(n288) );
+  hadd1s1 U296 ( .AIN(A[71]), .BIN(B[71]), .OUTS(n287) );
+  or3s1 U297 ( .DIN1(n289), .DIN2(n288), .DIN3(n287), .Q(n290) );
+  nor6s1 U298 ( .DIN1(n295), .DIN2(n294), .DIN3(n293), .DIN4(n292), .DIN5(n291), .DIN6(n290), .Q(n338) );
+  hadd1s1 U299 ( .AIN(A[110]), .BIN(B[110]), .OUTS(n299) );
+  hadd1s1 U300 ( .AIN(A[172]), .BIN(B[172]), .OUTS(n298) );
+  hadd1s1 U301 ( .AIN(A[101]), .BIN(B[101]), .OUTS(n297) );
+  hadd1s1 U302 ( .AIN(A[174]), .BIN(B[174]), .OUTS(n296) );
+  or4s1 U303 ( .DIN1(n299), .DIN2(n298), .DIN3(n297), .DIN4(n296), .Q(n315) );
+  hadd1s1 U304 ( .AIN(A[73]), .BIN(B[73]), .OUTS(n314) );
+  hadd1s1 U305 ( .AIN(A[168]), .BIN(B[168]), .OUTS(n313) );
+  hadd1s1 U306 ( .AIN(A[103]), .BIN(B[103]), .OUTS(n302) );
+  hadd1s1 U307 ( .AIN(A[111]), .BIN(B[111]), .OUTS(n301) );
+  hadd1s1 U308 ( .AIN(A[171]), .BIN(B[171]), .OUTS(n300) );
+  or3s1 U309 ( .DIN1(n302), .DIN2(n301), .DIN3(n300), .Q(n312) );
+  hadd1s1 U310 ( .AIN(A[175]), .BIN(B[175]), .OUTS(n306) );
+  hadd1s1 U311 ( .AIN(A[170]), .BIN(B[170]), .OUTS(n305) );
+  hadd1s1 U312 ( .AIN(A[162]), .BIN(B[162]), .OUTS(n304) );
+  hadd1s1 U313 ( .AIN(A[167]), .BIN(B[167]), .OUTS(n303) );
+  or4s1 U314 ( .DIN1(n306), .DIN2(n305), .DIN3(n304), .DIN4(n303), .Q(n311) );
+  hadd1s1 U315 ( .AIN(A[105]), .BIN(B[105]), .OUTS(n309) );
+  hadd1s1 U316 ( .AIN(A[98]), .BIN(B[98]), .OUTS(n308) );
+  hadd1s1 U317 ( .AIN(A[109]), .BIN(B[109]), .OUTS(n307) );
+  or3s1 U318 ( .DIN1(n309), .DIN2(n308), .DIN3(n307), .Q(n310) );
+  nor6s1 U319 ( .DIN1(n315), .DIN2(n314), .DIN3(n313), .DIN4(n312), .DIN5(n311), .DIN6(n310), .Q(n337) );
+  hadd1s1 U320 ( .AIN(A[173]), .BIN(B[173]), .OUTS(n319) );
+  hadd1s1 U321 ( .AIN(A[169]), .BIN(B[169]), .OUTS(n318) );
+  hadd1s1 U322 ( .AIN(A[160]), .BIN(B[160]), .OUTS(n317) );
+  hadd1s1 U323 ( .AIN(A[38]), .BIN(B[38]), .OUTS(n316) );
+  or4s1 U324 ( .DIN1(n319), .DIN2(n318), .DIN3(n317), .DIN4(n316), .Q(n335) );
+  hadd1s1 U325 ( .AIN(A[126]), .BIN(B[126]), .OUTS(n334) );
+  hadd1s1 U326 ( .AIN(A[102]), .BIN(B[102]), .OUTS(n333) );
+  hadd1s1 U327 ( .AIN(A[166]), .BIN(B[166]), .OUTS(n322) );
+  hadd1s1 U328 ( .AIN(A[161]), .BIN(B[161]), .OUTS(n321) );
+  hadd1s1 U329 ( .AIN(A[191]), .BIN(B[191]), .OUTS(n320) );
+  or3s1 U330 ( .DIN1(n322), .DIN2(n321), .DIN3(n320), .Q(n332) );
+  hadd1s1 U331 ( .AIN(A[107]), .BIN(B[107]), .OUTS(n326) );
+  hadd1s1 U332 ( .AIN(A[99]), .BIN(B[99]), .OUTS(n325) );
+  hadd1s1 U333 ( .AIN(A[164]), .BIN(B[164]), .OUTS(n324) );
+  hadd1s1 U334 ( .AIN(A[97]), .BIN(B[97]), .OUTS(n323) );
+  or4s1 U335 ( .DIN1(n326), .DIN2(n325), .DIN3(n324), .DIN4(n323), .Q(n331) );
+  hadd1s1 U336 ( .AIN(A[96]), .BIN(B[96]), .OUTS(n329) );
+  hadd1s1 U337 ( .AIN(A[104]), .BIN(B[104]), .OUTS(n328) );
+  hadd1s1 U338 ( .AIN(A[100]), .BIN(B[100]), .OUTS(n327) );
+  or3s1 U339 ( .DIN1(n329), .DIN2(n328), .DIN3(n327), .Q(n330) );
+  nor6s1 U340 ( .DIN1(n335), .DIN2(n334), .DIN3(n333), .DIN4(n332), .DIN5(n331), .DIN6(n330), .Q(n336) );
+  nnd4s1 U341 ( .DIN1(n339), .DIN2(n338), .DIN3(n337), .DIN4(n336), .Q(n510)
+         );
+  hadd1s1 U342 ( .AIN(A[136]), .BIN(B[136]), .OUTS(n343) );
+  hadd1s1 U343 ( .AIN(A[40]), .BIN(B[40]), .OUTS(n342) );
+  hadd1s1 U344 ( .AIN(A[133]), .BIN(B[133]), .OUTS(n341) );
+  hadd1s1 U345 ( .AIN(A[44]), .BIN(B[44]), .OUTS(n340) );
+  or4s1 U346 ( .DIN1(n343), .DIN2(n342), .DIN3(n341), .DIN4(n340), .Q(n359) );
+  hadd1s1 U347 ( .AIN(A[163]), .BIN(B[163]), .OUTS(n358) );
+  hadd1s1 U348 ( .AIN(A[39]), .BIN(B[39]), .OUTS(n357) );
+  hadd1s1 U349 ( .AIN(A[36]), .BIN(B[36]), .OUTS(n346) );
+  hadd1s1 U350 ( .AIN(A[187]), .BIN(B[187]), .OUTS(n345) );
+  hadd1s1 U351 ( .AIN(A[46]), .BIN(B[46]), .OUTS(n344) );
+  or3s1 U352 ( .DIN1(n346), .DIN2(n345), .DIN3(n344), .Q(n356) );
+  hadd1s1 U353 ( .AIN(A[41]), .BIN(B[41]), .OUTS(n350) );
+  hadd1s1 U354 ( .AIN(A[42]), .BIN(B[42]), .OUTS(n349) );
+  hadd1s1 U355 ( .AIN(A[35]), .BIN(B[35]), .OUTS(n348) );
+  hadd1s1 U356 ( .AIN(A[32]), .BIN(B[32]), .OUTS(n347) );
+  or4s1 U357 ( .DIN1(n350), .DIN2(n349), .DIN3(n348), .DIN4(n347), .Q(n355) );
+  hadd1s1 U358 ( .AIN(A[47]), .BIN(B[47]), .OUTS(n353) );
+  hadd1s1 U359 ( .AIN(A[34]), .BIN(B[34]), .OUTS(n352) );
+  hadd1s1 U360 ( .AIN(A[58]), .BIN(B[58]), .OUTS(n351) );
+  or3s1 U361 ( .DIN1(n353), .DIN2(n352), .DIN3(n351), .Q(n354) );
+  nor6s1 U362 ( .DIN1(n359), .DIN2(n358), .DIN3(n357), .DIN4(n356), .DIN5(n355), .DIN6(n354), .Q(n423) );
+  hadd1s1 U363 ( .AIN(A[134]), .BIN(B[134]), .OUTS(n363) );
+  hadd1s1 U364 ( .AIN(A[137]), .BIN(B[137]), .OUTS(n362) );
+  hadd1s1 U365 ( .AIN(A[138]), .BIN(B[138]), .OUTS(n361) );
+  hadd1s1 U366 ( .AIN(A[142]), .BIN(B[142]), .OUTS(n360) );
+  or4s1 U367 ( .DIN1(n363), .DIN2(n362), .DIN3(n361), .DIN4(n360), .Q(n379) );
+  hadd1s1 U368 ( .AIN(A[33]), .BIN(B[33]), .OUTS(n378) );
+  hadd1s1 U369 ( .AIN(A[132]), .BIN(B[132]), .OUTS(n377) );
+  hadd1s1 U370 ( .AIN(A[45]), .BIN(B[45]), .OUTS(n366) );
+  hadd1s1 U371 ( .AIN(A[128]), .BIN(B[128]), .OUTS(n365) );
+  hadd1s1 U372 ( .AIN(A[140]), .BIN(B[140]), .OUTS(n364) );
+  or3s1 U373 ( .DIN1(n366), .DIN2(n365), .DIN3(n364), .Q(n376) );
+  hadd1s1 U374 ( .AIN(A[131]), .BIN(B[131]), .OUTS(n370) );
+  hadd1s1 U375 ( .AIN(A[143]), .BIN(B[143]), .OUTS(n369) );
+  hadd1s1 U376 ( .AIN(A[130]), .BIN(B[130]), .OUTS(n368) );
+  hadd1s1 U377 ( .AIN(A[141]), .BIN(B[141]), .OUTS(n367) );
+  or4s1 U378 ( .DIN1(n370), .DIN2(n369), .DIN3(n368), .DIN4(n367), .Q(n375) );
+  hadd1s1 U379 ( .AIN(A[129]), .BIN(B[129]), .OUTS(n373) );
+  hadd1s1 U380 ( .AIN(A[154]), .BIN(B[154]), .OUTS(n372) );
+  hadd1s1 U381 ( .AIN(A[135]), .BIN(B[135]), .OUTS(n371) );
+  or3s1 U382 ( .DIN1(n373), .DIN2(n372), .DIN3(n371), .Q(n374) );
+  nor6s1 U383 ( .DIN1(n379), .DIN2(n378), .DIN3(n377), .DIN4(n376), .DIN5(n375), .DIN6(n374), .Q(n422) );
+  hadd1s1 U384 ( .AIN(A[190]), .BIN(B[190]), .OUTS(n383) );
+  hadd1s1 U385 ( .AIN(A[184]), .BIN(B[184]), .OUTS(n382) );
+  hadd1s1 U386 ( .AIN(A[165]), .BIN(B[165]), .OUTS(n381) );
+  hadd1s1 U387 ( .AIN(A[85]), .BIN(B[85]), .OUTS(n380) );
+  or4s1 U388 ( .DIN1(n383), .DIN2(n382), .DIN3(n381), .DIN4(n380), .Q(n399) );
+  hadd1s1 U389 ( .AIN(A[183]), .BIN(B[183]), .OUTS(n398) );
+  hadd1s1 U390 ( .AIN(A[178]), .BIN(B[178]), .OUTS(n397) );
+  hadd1s1 U391 ( .AIN(A[186]), .BIN(B[186]), .OUTS(n386) );
+  hadd1s1 U392 ( .AIN(A[189]), .BIN(B[189]), .OUTS(n385) );
+  hadd1s1 U393 ( .AIN(A[69]), .BIN(B[69]), .OUTS(n384) );
+  or3s1 U394 ( .DIN1(n386), .DIN2(n385), .DIN3(n384), .Q(n396) );
+  hadd1s1 U395 ( .AIN(A[185]), .BIN(B[185]), .OUTS(n390) );
+  hadd1s1 U396 ( .AIN(A[180]), .BIN(B[180]), .OUTS(n389) );
+  hadd1s1 U397 ( .AIN(A[188]), .BIN(B[188]), .OUTS(n388) );
+  hadd1s1 U398 ( .AIN(A[176]), .BIN(B[176]), .OUTS(n387) );
+  or4s1 U399 ( .DIN1(n390), .DIN2(n389), .DIN3(n388), .DIN4(n387), .Q(n395) );
+  hadd1s1 U400 ( .AIN(A[182]), .BIN(B[182]), .OUTS(n393) );
+  hadd1s1 U401 ( .AIN(A[177]), .BIN(B[177]), .OUTS(n392) );
+  hadd1s1 U402 ( .AIN(A[179]), .BIN(B[179]), .OUTS(n391) );
+  or3s1 U403 ( .DIN1(n393), .DIN2(n392), .DIN3(n391), .Q(n394) );
+  nor6s1 U404 ( .DIN1(n399), .DIN2(n398), .DIN3(n397), .DIN4(n396), .DIN5(n395), .DIN6(n394), .Q(n421) );
+  hadd1s1 U405 ( .AIN(A[147]), .BIN(B[147]), .OUTS(n403) );
+  hadd1s1 U406 ( .AIN(A[88]), .BIN(B[88]), .OUTS(n402) );
+  hadd1s1 U407 ( .AIN(A[150]), .BIN(B[150]), .OUTS(n401) );
+  hadd1s1 U408 ( .AIN(A[83]), .BIN(B[83]), .OUTS(n400) );
+  or4s1 U409 ( .DIN1(n403), .DIN2(n402), .DIN3(n401), .DIN4(n400), .Q(n419) );
+  hadd1s1 U410 ( .AIN(A[139]), .BIN(B[139]), .OUTS(n418) );
+  hadd1s1 U411 ( .AIN(A[80]), .BIN(B[80]), .OUTS(n417) );
+  hadd1s1 U412 ( .AIN(A[84]), .BIN(B[84]), .OUTS(n406) );
+  hadd1s1 U413 ( .AIN(A[181]), .BIN(B[181]), .OUTS(n405) );
+  hadd1s1 U414 ( .AIN(A[91]), .BIN(B[91]), .OUTS(n404) );
+  or3s1 U415 ( .DIN1(n406), .DIN2(n405), .DIN3(n404), .Q(n416) );
+  hadd1s1 U416 ( .AIN(A[92]), .BIN(B[92]), .OUTS(n410) );
+  hadd1s1 U417 ( .AIN(A[89]), .BIN(B[89]), .OUTS(n409) );
+  hadd1s1 U418 ( .AIN(A[86]), .BIN(B[86]), .OUTS(n408) );
+  hadd1s1 U419 ( .AIN(A[93]), .BIN(B[93]), .OUTS(n407) );
+  or4s1 U420 ( .DIN1(n410), .DIN2(n409), .DIN3(n408), .DIN4(n407), .Q(n415) );
+  hadd1s1 U421 ( .AIN(A[95]), .BIN(B[95]), .OUTS(n413) );
+  hadd1s1 U422 ( .AIN(A[82]), .BIN(B[82]), .OUTS(n412) );
+  hadd1s1 U423 ( .AIN(A[87]), .BIN(B[87]), .OUTS(n411) );
+  or3s1 U424 ( .DIN1(n413), .DIN2(n412), .DIN3(n411), .Q(n414) );
+  nor6s1 U425 ( .DIN1(n419), .DIN2(n418), .DIN3(n417), .DIN4(n416), .DIN5(n415), .DIN6(n414), .Q(n420) );
+  nnd4s1 U426 ( .DIN1(n423), .DIN2(n422), .DIN3(n421), .DIN4(n420), .Q(n509)
+         );
+  hadd1s1 U427 ( .AIN(A[144]), .BIN(B[144]), .OUTS(n427) );
+  hadd1s1 U428 ( .AIN(A[155]), .BIN(B[155]), .OUTS(n426) );
+  hadd1s1 U429 ( .AIN(A[151]), .BIN(B[151]), .OUTS(n425) );
+  hadd1s1 U430 ( .AIN(A[153]), .BIN(B[153]), .OUTS(n424) );
+  nor4s1 U431 ( .DIN1(n427), .DIN2(n426), .DIN3(n425), .DIN4(n424), .Q(n507)
+         );
+  hadd1s1 U432 ( .AIN(A[81]), .BIN(B[81]), .OUTS(n431) );
+  hadd1s1 U433 ( .AIN(A[43]), .BIN(B[43]), .OUTS(n430) );
+  hadd1s1 U434 ( .AIN(A[149]), .BIN(B[149]), .OUTS(n429) );
+  hadd1s1 U435 ( .AIN(A[146]), .BIN(B[146]), .OUTS(n428) );
+  nor4s1 U436 ( .DIN1(n431), .DIN2(n430), .DIN3(n429), .DIN4(n428), .Q(n506)
+         );
+  hadd1s1 U437 ( .AIN(A[31]), .BIN(B[31]), .OUTS(n441) );
+  hadd1s1 U438 ( .AIN(A[0]), .BIN(B[0]), .OUTS(n440) );
+  hadd1s1 U439 ( .AIN(A[17]), .BIN(B[17]), .OUTS(n435) );
+  hadd1s1 U440 ( .AIN(A[106]), .BIN(B[106]), .OUTS(n434) );
+  hadd1s1 U441 ( .AIN(A[23]), .BIN(B[23]), .OUTS(n433) );
+  hadd1s1 U442 ( .AIN(A[14]), .BIN(B[14]), .OUTS(n432) );
+  or4s1 U443 ( .DIN1(n435), .DIN2(n434), .DIN3(n433), .DIN4(n432), .Q(n438) );
+  hadd1s1 U444 ( .AIN(A[18]), .BIN(B[18]), .OUTS(n437) );
+  hadd1s1 U445 ( .AIN(A[19]), .BIN(B[19]), .OUTS(n436) );
+  or3s1 U446 ( .DIN1(n438), .DIN2(n437), .DIN3(n436), .Q(n439) );
+  or3s1 U447 ( .DIN1(n441), .DIN2(n440), .DIN3(n439), .Q(n462) );
+  hadd1s1 U448 ( .AIN(A[152]), .BIN(B[152]), .OUTS(n461) );
+  hadd1s1 U449 ( .AIN(A[156]), .BIN(B[156]), .OUTS(n460) );
+  hadd1s1 U450 ( .AIN(A[30]), .BIN(B[30]), .OUTS(n445) );
+  hadd1s1 U451 ( .AIN(A[5]), .BIN(B[5]), .OUTS(n444) );
+  hadd1s1 U452 ( .AIN(A[24]), .BIN(B[24]), .OUTS(n443) );
+  hadd1s1 U453 ( .AIN(A[22]), .BIN(B[22]), .OUTS(n442) );
+  or4s1 U454 ( .DIN1(n445), .DIN2(n444), .DIN3(n443), .DIN4(n442), .Q(n459) );
+  hadd1s1 U455 ( .AIN(A[145]), .BIN(B[145]), .OUTS(n449) );
+  hadd1s1 U456 ( .AIN(A[157]), .BIN(B[157]), .OUTS(n448) );
+  hadd1s1 U457 ( .AIN(A[158]), .BIN(B[158]), .OUTS(n447) );
+  hadd1s1 U458 ( .AIN(A[159]), .BIN(B[159]), .OUTS(n446) );
+  or4s1 U459 ( .DIN1(n449), .DIN2(n448), .DIN3(n447), .DIN4(n446), .Q(n452) );
+  hadd1s1 U460 ( .AIN(A[148]), .BIN(B[148]), .OUTS(n451) );
+  hadd1s1 U461 ( .AIN(A[94]), .BIN(B[94]), .OUTS(n450) );
+  or3s1 U462 ( .DIN1(n452), .DIN2(n451), .DIN3(n450), .Q(n458) );
+  hadd1s1 U463 ( .AIN(A[25]), .BIN(B[25]), .OUTS(n456) );
+  hadd1s1 U464 ( .AIN(A[29]), .BIN(B[29]), .OUTS(n455) );
+  hadd1s1 U465 ( .AIN(A[26]), .BIN(B[26]), .OUTS(n454) );
+  hadd1s1 U466 ( .AIN(A[16]), .BIN(B[16]), .OUTS(n453) );
+  or4s1 U467 ( .DIN1(n456), .DIN2(n455), .DIN3(n454), .DIN4(n453), .Q(n457) );
+  nor6s1 U468 ( .DIN1(n462), .DIN2(n461), .DIN3(n460), .DIN4(n459), .DIN5(n458), .DIN6(n457), .Q(n505) );
+  hadd1s1 U469 ( .AIN(A[60]), .BIN(B[60]), .OUTS(n466) );
+  hadd1s1 U470 ( .AIN(A[13]), .BIN(B[13]), .OUTS(n465) );
+  hadd1s1 U471 ( .AIN(A[62]), .BIN(B[62]), .OUTS(n464) );
+  hadd1s1 U472 ( .AIN(A[1]), .BIN(B[1]), .OUTS(n463) );
+  nor4s1 U473 ( .DIN1(n466), .DIN2(n465), .DIN3(n464), .DIN4(n463), .Q(n482)
+         );
+  hadd1s1 U474 ( .AIN(A[11]), .BIN(B[11]), .OUTS(n470) );
+  hadd1s1 U475 ( .AIN(A[55]), .BIN(B[55]), .OUTS(n469) );
+  hadd1s1 U476 ( .AIN(A[53]), .BIN(B[53]), .OUTS(n468) );
+  hadd1s1 U477 ( .AIN(A[50]), .BIN(B[50]), .OUTS(n467) );
+  nor4s1 U478 ( .DIN1(n470), .DIN2(n469), .DIN3(n468), .DIN4(n467), .Q(n481)
+         );
+  hadd1s1 U479 ( .AIN(A[63]), .BIN(B[63]), .OUTS(n474) );
+  hadd1s1 U480 ( .AIN(A[51]), .BIN(B[51]), .OUTS(n473) );
+  hadd1s1 U481 ( .AIN(A[57]), .BIN(B[57]), .OUTS(n472) );
+  hadd1s1 U482 ( .AIN(A[52]), .BIN(B[52]), .OUTS(n471) );
+  nor4s1 U483 ( .DIN1(n474), .DIN2(n473), .DIN3(n472), .DIN4(n471), .Q(n480)
+         );
+  hadd1s1 U484 ( .AIN(A[9]), .BIN(B[9]), .OUTS(n478) );
+  hadd1s1 U485 ( .AIN(A[2]), .BIN(B[2]), .OUTS(n477) );
+  hadd1s1 U486 ( .AIN(A[37]), .BIN(B[37]), .OUTS(n476) );
+  hadd1s1 U487 ( .AIN(A[49]), .BIN(B[49]), .OUTS(n475) );
+  nor4s1 U488 ( .DIN1(n478), .DIN2(n477), .DIN3(n476), .DIN4(n475), .Q(n479)
+         );
+  nnd4s1 U489 ( .DIN1(n482), .DIN2(n481), .DIN3(n480), .DIN4(n479), .Q(n503)
+         );
+  hadd1s1 U490 ( .AIN(A[20]), .BIN(B[20]), .OUTS(n502) );
+  hadd1s1 U491 ( .AIN(A[56]), .BIN(B[56]), .OUTS(n501) );
+  hadd1s1 U492 ( .AIN(A[12]), .BIN(B[12]), .OUTS(n486) );
+  hadd1s1 U493 ( .AIN(A[8]), .BIN(B[8]), .OUTS(n485) );
+  hadd1s1 U494 ( .AIN(A[10]), .BIN(B[10]), .OUTS(n484) );
+  hadd1s1 U495 ( .AIN(A[28]), .BIN(B[28]), .OUTS(n483) );
+  or4s1 U496 ( .DIN1(n486), .DIN2(n485), .DIN3(n484), .DIN4(n483), .Q(n500) );
+  hadd1s1 U497 ( .AIN(A[54]), .BIN(B[54]), .OUTS(n490) );
+  hadd1s1 U498 ( .AIN(A[27]), .BIN(B[27]), .OUTS(n489) );
+  hadd1s1 U499 ( .AIN(A[48]), .BIN(B[48]), .OUTS(n488) );
+  hadd1s1 U500 ( .AIN(A[6]), .BIN(B[6]), .OUTS(n487) );
+  or4s1 U501 ( .DIN1(n490), .DIN2(n489), .DIN3(n488), .DIN4(n487), .Q(n493) );
+  hadd1s1 U502 ( .AIN(A[7]), .BIN(B[7]), .OUTS(n492) );
+  hadd1s1 U503 ( .AIN(A[4]), .BIN(B[4]), .OUTS(n491) );
+  or3s1 U504 ( .DIN1(n493), .DIN2(n492), .DIN3(n491), .Q(n499) );
+  hadd1s1 U505 ( .AIN(A[59]), .BIN(B[59]), .OUTS(n497) );
+  hadd1s1 U506 ( .AIN(A[3]), .BIN(B[3]), .OUTS(n496) );
+  hadd1s1 U507 ( .AIN(A[61]), .BIN(B[61]), .OUTS(n495) );
+  hadd1s1 U508 ( .AIN(A[15]), .BIN(B[15]), .OUTS(n494) );
+  or4s1 U509 ( .DIN1(n497), .DIN2(n496), .DIN3(n495), .DIN4(n494), .Q(n498) );
+  nor6s1 U510 ( .DIN1(n503), .DIN2(n502), .DIN3(n501), .DIN4(n500), .DIN5(n499), .DIN6(n498), .Q(n504) );
+  nnd4s1 U511 ( .DIN1(n507), .DIN2(n506), .DIN3(n505), .DIN4(n504), .Q(n508)
+         );
+  or3s1 U512 ( .DIN1(n510), .DIN2(n509), .DIN3(n508), .Q(out) );
+endmodule
+

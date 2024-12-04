@@ -1,0 +1,249 @@
+ 
+****************************************
+Report : design
+Design : Comparator
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 20:34:41 2024
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Local Link Library:
+
+    {lec25dscc25_TT.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+
+    Operating Condition Name : nom_pvt
+    Library : lec25dscc25_TT
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   2.50
+    Interconnect Model : balanced_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   tsmcwire
+Location       :   lec25dscc25_TT
+Resistance     :   0.2642
+Capacitance    :   0.000132782
+Area           :   0.27
+Slope          :   0.74
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1     0.89
+     2     1.48
+     3     2.44
+     4     3.18
+     5     3.92
+
+
+
+Wire Loading Model Mode: top.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    DesignWare
+
+Design Parameters:
+
+    None specified.
+1
+ 
+****************************************
+Report : area
+Design : Comparator
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 20:34:41 2024
+****************************************
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Number of ports:                          385
+Number of nets:                           640
+Number of cells:                          256
+Number of combinational cells:            256
+Number of sequential cells:                 0
+Number of macros/black boxes:               0
+Number of buf/inv:                          0
+Number of references:                       6
+
+Combinational area:              16873.917961
+Buf/Inv area:                        0.000000
+Noncombinational area:               0.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:             153.446407
+
+Total cell area:                 16873.917961
+Total area:                      17027.364368
+1
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 1
+        -transition_time
+Design : Comparator
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 20:34:41 2024
+****************************************
+
+Operating Conditions: nom_pvt   Library: lec25dscc25_TT
+Wire Load Model Mode: top
+
+  Startpoint: B[17] (input port)
+  Endpoint: out (output port)
+  Path Group: default
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Comparator         tsmcwire              lec25dscc25_TT
+
+  Point                        Fanout     Trans      Incr       Path
+  ---------------------------------------------------------------------
+  input external delay                               0.00       0.00 f
+  B[17] (in)                               0.00      0.00       0.00 f
+  B[17] (net)                    1                   0.00       0.00 f
+  U439/BIN (hadd1s1)                       0.00      0.00       0.00 f
+  U439/OUTS (hadd1s1)                      0.10      0.30       0.30 r
+  n435 (net)                     1                   0.00       0.30 r
+  U443/DIN1 (or4s1)                        0.10      0.00       0.30 r
+  U443/Q (or4s1)                           0.16      0.25       0.55 r
+  n438 (net)                     1                   0.00       0.55 r
+  U446/DIN1 (or3s1)                        0.16      0.00       0.55 r
+  U446/Q (or3s1)                           0.17      0.22       0.77 r
+  n439 (net)                     1                   0.00       0.77 r
+  U447/DIN3 (or3s1)                        0.17      0.00       0.77 r
+  U447/Q (or3s1)                           0.16      0.16       0.93 r
+  n462 (net)                     1                   0.00       0.93 r
+  U468/DIN1 (nor6s1)                       0.16      0.00       0.93 r
+  U468/Q (nor6s1)                          0.12      0.28       1.21 f
+  n505 (net)                     1                   0.00       1.21 f
+  U511/DIN3 (nnd4s1)                       0.12      0.00       1.21 f
+  U511/Q (nnd4s1)                          0.36      0.14       1.36 r
+  n508 (net)                     1                   0.00       1.36 r
+  U512/DIN3 (or3s1)                        0.36      0.00       1.36 r
+  U512/Q (or3s1)                           0.11      0.16       1.52 r
+  out (net)                      1                   0.00       1.52 r
+  out (out)                                0.11      0.00       1.52 r
+  data arrival time                                             1.52
+
+  max_delay                                          1.60       1.60
+  output external delay                              0.00       1.60
+  data required time                                            1.60
+  ---------------------------------------------------------------------
+  data required time                                            1.60
+  data arrival time                                            -1.52
+  ---------------------------------------------------------------------
+  slack (MET)                                                   0.08
+
+
+1
+ 
+****************************************
+Report : constraint
+        -verbose
+        -max_delay
+Design : Comparator
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 20:34:41 2024
+****************************************
+
+
+  Startpoint: B[17] (input port)
+  Endpoint: out (output port)
+  Path Group: default
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Comparator         tsmcwire              lec25dscc25_TT
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  input external delay                     0.00       0.00 f
+  B[17] (in)                               0.00       0.00 f
+  U439/OUTS (hadd1s1)                      0.30       0.30 r
+  U443/Q (or4s1)                           0.25       0.55 r
+  U446/Q (or3s1)                           0.22       0.77 r
+  U447/Q (or3s1)                           0.16       0.93 r
+  U468/Q (nor6s1)                          0.28       1.21 f
+  U511/Q (nnd4s1)                          0.15       1.36 r
+  U512/Q (or3s1)                           0.16       1.52 r
+  out (out)                                0.00       1.52 r
+  data arrival time                                   1.52
+
+  max_delay                                1.60       1.60
+  output external delay                    0.00       1.60
+  data required time                                  1.60
+  -----------------------------------------------------------
+  data required time                                  1.60
+  data arrival time                                  -1.52
+  -----------------------------------------------------------
+  slack (MET)                                         0.08
+
+
+1
+ 
+****************************************
+Report : resources
+Design : Comparator
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 20:34:41 2024
+****************************************
+
+
+Resource Report for this hierarchy in file ../verilog/Comparator_synth.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| eq_x_1         | DW_cmp         | width=192  | eq_8 (Comparator_synth.sv:8) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| eq_x_1             | DW_cmp           | apparch (area)     |                |
+===============================================================================
+
+1

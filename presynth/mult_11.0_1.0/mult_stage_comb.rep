@@ -1,0 +1,556 @@
+ 
+****************************************
+Report : design
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 23:13:30 2024
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Local Link Library:
+
+    {lec25dscc25_TT.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+
+    Operating Condition Name : nom_pvt
+    Library : lec25dscc25_TT
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   2.50
+    Interconnect Model : balanced_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   tsmcwire
+Location       :   lec25dscc25_TT
+Resistance     :   0.2642
+Capacitance    :   0.000132782
+Area           :   0.27
+Slope          :   0.74
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1     0.89
+     2     1.48
+     3     2.44
+     4     3.18
+     5     3.92
+
+
+
+Wire Loading Model Mode: top.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    DesignWare
+
+Design Parameters:
+
+    None specified.
+1
+ 
+****************************************
+Report : area
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 23:13:30 2024
+****************************************
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+Number of ports:                          384
+Number of nets:                          3251
+Number of cells:                         2768
+Number of combinational cells:           2736
+Number of sequential cells:                 0
+Number of macros/black boxes:               0
+Number of buf/inv:                        583
+Number of references:                      42
+
+Combinational area:             210204.833332
+Buf/Inv area:                    39298.848537
+Noncombinational area:               0.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:            1499.470770
+
+Total cell area:                210204.833332
+Total area:                     211704.304102
+1
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 1
+        -transition_time
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 23:13:30 2024
+****************************************
+
+Operating Conditions: nom_pvt   Library: lec25dscc25_TT
+Wire Load Model Mode: top
+
+  Startpoint: mcand[4] (input port)
+  Endpoint: product_sum[63]
+            (output port)
+  Path Group: default
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  mult_stage_comb    tsmcwire              lec25dscc25_TT
+
+  Point                        Fanout     Trans      Incr       Path
+  ---------------------------------------------------------------------
+  input external delay                               0.00       0.00 f
+  mcand[4] (in)                            0.00      0.00       0.00 f
+  mcand[4] (net)                 3                   0.00       0.00 f
+  U147/DIN2 (xnr2s1)                       0.00      0.01       0.01 f
+  U147/Q (xnr2s1)                          0.45      0.37       0.38 f
+  n1415 (net)                    2                   0.00       0.38 f
+  U2671/DIN (ib1s6)                        0.45      0.01       0.39 f
+  U2671/Q (ib1s6)                          0.08      0.07       0.46 r
+  n1412 (net)                    1                   0.00       0.46 r
+  U1591/DIN2 (and2s2)                      0.08      0.00       0.46 r
+  U1591/Q (and2s2)                         0.44      0.24       0.70 r
+  n1816 (net)                   16                   0.00       0.70 r
+  U1791/DIN3 (aoi222s1)                    0.44      0.00       0.70 r
+  U1791/Q (aoi222s1)                       0.45      0.22       0.92 f
+  n1590 (net)                    1                   0.00       0.92 f
+  U1792/DIN3 (oai21s1)                     0.45      0.00       0.92 f
+  U1792/Q (oai21s1)                        0.39      0.21       1.12 r
+  n1591 (net)                    1                   0.00       1.12 r
+  U1793/DIN2 (xor2s1)                      0.39      0.00       1.13 r
+  U1793/Q (xor2s1)                         0.17      0.21       1.33 f
+  n1633 (net)                    3                   0.00       1.33 f
+  U1841/DIN2 (xor2s1)                      0.17      0.00       1.34 f
+  U1841/Q (xor2s1)                         0.17      0.22       1.56 r
+  n1635 (net)                    1                   0.00       1.56 r
+  U1842/DIN1 (xor2s1)                      0.17      0.00       1.56 r
+  U1842/Q (xor2s1)                         0.19      0.24       1.80 r
+  n1637 (net)                    2                   0.00       1.80 r
+  U1843/DIN2 (nor2s1)                      0.19      0.00       1.81 r
+  U1843/Q (nor2s1)                         0.25      0.11       1.92 f
+  n2640 (net)                    2                   0.00       1.92 f
+  U1845/DIN2 (oai21s1)                     0.25      0.00       1.92 f
+  U1845/Q (oai21s1)                        0.43      0.19       2.11 r
+  n2639 (net)                    2                   0.00       2.11 r
+  U1846/DIN2 (nnd2s1)                      0.43      0.00       2.11 r
+  U1846/Q (nnd2s1)                         0.17      0.06       2.17 f
+  n1640 (net)                    1                   0.00       2.17 f
+  U189/DIN1 (and2s1)                       0.17      0.00       2.17 f
+  U189/Q (and2s1)                          0.19      0.22       2.39 f
+  n2634 (net)                    2                   0.00       2.39 f
+  U1848/DIN2 (nor2s1)                      0.19      0.00       2.39 f
+  U1848/Q (nor2s1)                         0.19      0.07       2.46 r
+  n1641 (net)                    1                   0.00       2.46 r
+  U279/DIN2 (or2s1)                        0.19      0.00       2.46 r
+  U279/Q (or2s1)                           0.19      0.15       2.61 r
+  n2630 (net)                    2                   0.00       2.61 r
+  U403/DIN2 (aoi21s1)                      0.19      0.00       2.61 r
+  U403/Q (aoi21s1)                         0.34      0.17       2.78 f
+  n2625 (net)                    2                   0.00       2.78 f
+  U2612/DIN2 (oai21s2)                     0.34      0.00       2.79 f
+  U2612/Q (oai21s2)                        0.40      0.17       2.95 r
+  n2611 (net)                    2                   0.00       2.95 r
+  U1864/DIN1 (nnd2s1)                      0.40      0.00       2.96 r
+  U1864/Q (nnd2s1)                         0.17      0.06       3.02 f
+  n1675 (net)                    1                   0.00       3.02 f
+  U105/DIN1 (and2s1)                       0.17      0.00       3.02 f
+  U105/Q (and2s1)                          0.20      0.22       3.24 f
+  n2595 (net)                    2                   0.00       3.24 f
+  U1874/DIN2 (oai211s2)                    0.20      0.00       3.24 f
+  U1874/Q (oai211s2)                       0.44      0.17       3.41 r
+  n2582 (net)                    2                   0.00       3.41 r
+  U1927/DIN1 (aoi21s1)                     0.44      0.00       3.41 r
+  U1927/Q (aoi21s1)                        0.34      0.18       3.59 f
+  n2558 (net)                    2                   0.00       3.59 f
+  U2065/DIN1 (oai21s1)                     0.34      0.00       3.59 f
+  U2065/Q (oai21s1)                        0.44      0.20       3.80 r
+  n2523 (net)                    2                   0.00       3.80 r
+  U2179/DIN1 (aoi21s1)                     0.44      0.00       3.80 r
+  U2179/Q (aoi21s1)                        0.34      0.18       3.98 f
+  n2519 (net)                    2                   0.00       3.98 f
+  U2181/DIN2 (oai21s1)                     0.34      0.00       3.98 f
+  U2181/Q (oai21s1)                        0.47      0.20       4.18 r
+  n2515 (net)                    2                   0.00       4.18 r
+  U2185/DIN1 (nnd2s1)                      0.47      0.00       4.18 r
+  U2185/Q (nnd2s1)                         0.18      0.06       4.25 f
+  n2114 (net)                    1                   0.00       4.25 f
+  U104/DIN1 (and2s1)                       0.18      0.00       4.25 f
+  U104/Q (and2s1)                          0.19      0.22       4.47 f
+  n2510 (net)                    2                   0.00       4.47 f
+  U163/DIN2 (nor2s1)                       0.19      0.00       4.47 f
+  U163/Q (nor2s1)                          0.26      0.07       4.54 r
+  n2115 (net)                    1                   0.00       4.54 r
+  U162/DIN2 (or2s1)                        0.26      0.00       4.54 r
+  U162/Q (or2s1)                           0.19      0.16       4.70 r
+  n2506 (net)                    2                   0.00       4.70 r
+  U2188/DIN2 (aoi21s1)                     0.19      0.00       4.70 r
+  U2188/Q (aoi21s1)                        0.34      0.17       4.87 f
+  n2501 (net)                    2                   0.00       4.87 f
+  U161/DIN2 (oai21s2)                      0.34      0.00       4.88 f
+  U161/Q (oai21s2)                         0.39      0.16       5.04 r
+  n2497 (net)                    2                   0.00       5.04 r
+  U2193/DIN1 (nnd2s1)                      0.39      0.00       5.04 r
+  U2193/Q (nnd2s1)                         0.21      0.09       5.13 f
+  n2130 (net)                    1                   0.00       5.13 f
+  U2195/DIN1 (and2s2)                      0.21      0.00       5.13 f
+  U2195/Q (and2s2)                         0.10      0.15       5.28 f
+  n2492 (net)                    2                   0.00       5.28 f
+  U160/DIN2 (nor2s1)                       0.10      0.00       5.28 f
+  U160/Q (nor2s1)                          0.26      0.06       5.34 r
+  n2131 (net)                    1                   0.00       5.34 r
+  U159/DIN2 (or2s1)                        0.26      0.00       5.34 r
+  U159/Q (or2s1)                           0.21      0.17       5.51 r
+  n2488 (net)                    2                   0.00       5.51 r
+  U158/DIN2 (aoi21s2)                      0.21      0.00       5.51 r
+  U158/Q (aoi21s2)                         0.30      0.15       5.66 f
+  n2483 (net)                    2                   0.00       5.66 f
+  U157/DIN2 (oai21s2)                      0.30      0.00       5.66 f
+  U157/Q (oai21s2)                         0.39      0.15       5.82 r
+  n2479 (net)                    2                   0.00       5.82 r
+  U2201/DIN1 (nnd2s1)                      0.39      0.00       5.82 r
+  U2201/Q (nnd2s1)                         0.21      0.09       5.91 f
+  n2146 (net)                    1                   0.00       5.91 f
+  U2203/DIN1 (and2s2)                      0.21      0.00       5.91 f
+  U2203/Q (and2s2)                         0.10      0.15       6.06 f
+  n2474 (net)                    2                   0.00       6.06 f
+  U156/DIN2 (nor2s1)                       0.10      0.00       6.06 f
+  U156/Q (nor2s1)                          0.26      0.06       6.12 r
+  n2147 (net)                    1                   0.00       6.12 r
+  U155/DIN2 (or2s1)                        0.26      0.00       6.12 r
+  U155/Q (or2s1)                           0.21      0.17       6.29 r
+  n2470 (net)                    2                   0.00       6.29 r
+  U154/DIN2 (aoi21s2)                      0.21      0.00       6.29 r
+  U154/Q (aoi21s2)                         0.30      0.15       6.44 f
+  n2465 (net)                    2                   0.00       6.44 f
+  U265/DIN2 (oai21s2)                      0.30      0.00       6.45 f
+  U265/Q (oai21s2)                         0.39      0.15       6.60 r
+  n2461 (net)                    2                   0.00       6.60 r
+  U2209/DIN1 (nnd2s1)                      0.39      0.00       6.60 r
+  U2209/Q (nnd2s1)                         0.21      0.09       6.69 f
+  n2162 (net)                    1                   0.00       6.69 f
+  U2211/DIN1 (and2s2)                      0.21      0.00       6.70 f
+  U2211/Q (and2s2)                         0.10      0.15       6.84 f
+  n2456 (net)                    2                   0.00       6.84 f
+  U264/DIN2 (nor2s1)                       0.10      0.00       6.85 f
+  U264/Q (nor2s1)                          0.26      0.06       6.90 r
+  n2163 (net)                    1                   0.00       6.90 r
+  U96/DIN2 (or2s1)                         0.26      0.00       6.91 r
+  U96/Q (or2s1)                            0.21      0.17       7.07 r
+  n2452 (net)                    2                   0.00       7.07 r
+  U263/DIN2 (aoi21s2)                      0.21      0.00       7.07 r
+  U263/Q (aoi21s2)                         0.30      0.15       7.23 f
+  n2447 (net)                    2                   0.00       7.23 f
+  U262/DIN2 (oai21s2)                      0.30      0.00       7.23 f
+  U262/Q (oai21s2)                         0.39      0.15       7.38 r
+  n2443 (net)                    2                   0.00       7.38 r
+  U2217/DIN1 (nnd2s1)                      0.39      0.00       7.38 r
+  U2217/Q (nnd2s1)                         0.21      0.09       7.48 f
+  n2178 (net)                    1                   0.00       7.48 f
+  U2219/DIN1 (and2s2)                      0.21      0.00       7.48 f
+  U2219/Q (and2s2)                         0.10      0.15       7.63 f
+  n2438 (net)                    2                   0.00       7.63 f
+  U92/DIN2 (nor2s1)                        0.10      0.00       7.63 f
+  U92/Q (nor2s1)                           0.26      0.06       7.69 r
+  n2179 (net)                    1                   0.00       7.69 r
+  U2628/DIN2 (or2s1)                       0.26      0.00       7.69 r
+  U2628/Q (or2s1)                          0.20      0.17       7.85 r
+  n2434 (net)                    2                   0.00       7.85 r
+  U261/DIN2 (aoi21s2)                      0.20      0.00       7.85 r
+  U261/Q (aoi21s2)                         0.30      0.15       8.01 f
+  n2429 (net)                    2                   0.00       8.01 f
+  U260/DIN2 (oai21s2)                      0.30      0.00       8.01 f
+  U260/Q (oai21s2)                         0.39      0.15       8.16 r
+  n2425 (net)                    2                   0.00       8.16 r
+  U2225/DIN1 (nnd2s1)                      0.39      0.00       8.17 r
+  U2225/Q (nnd2s1)                         0.16      0.06       8.23 f
+  n2194 (net)                    1                   0.00       8.23 f
+  U97/DIN1 (and2s1)                        0.16      0.00       8.23 f
+  U97/Q (and2s1)                           0.19      0.22       8.44 f
+  n2420 (net)                    2                   0.00       8.44 f
+  U93/DIN2 (nor2s1)                        0.19      0.00       8.44 f
+  U93/Q (nor2s1)                           0.26      0.07       8.51 r
+  n2195 (net)                    1                   0.00       8.51 r
+  U2630/DIN2 (or2s1)                       0.26      0.00       8.51 r
+  U2630/Q (or2s1)                          0.20      0.17       8.68 r
+  n2416 (net)                    2                   0.00       8.68 r
+  U259/DIN2 (aoi21s2)                      0.20      0.00       8.68 r
+  U259/Q (aoi21s2)                         0.30      0.15       8.83 f
+  n2411 (net)                    2                   0.00       8.83 f
+  U258/DIN2 (oai21s2)                      0.30      0.00       8.84 f
+  U258/Q (oai21s2)                         0.39      0.15       8.99 r
+  n2407 (net)                    2                   0.00       8.99 r
+  U2232/DIN1 (nnd2s1)                      0.39      0.00       8.99 r
+  U2232/Q (nnd2s1)                         0.21      0.09       9.08 f
+  n2210 (net)                    1                   0.00       9.08 f
+  U2234/DIN1 (and2s2)                      0.21      0.00       9.09 f
+  U2234/Q (and2s2)                         0.10      0.15       9.23 f
+  n2402 (net)                    2                   0.00       9.23 f
+  U257/DIN2 (oai21s2)                      0.10      0.00       9.24 f
+  U257/Q (oai21s2)                         0.39      0.13       9.36 r
+  n2398 (net)                    2                   0.00       9.36 r
+  U2239/DIN1 (nnd2s1)                      0.39      0.00       9.36 r
+  U2239/Q (nnd2s1)                         0.21      0.09       9.45 f
+  n2221 (net)                    1                   0.00       9.45 f
+  U2241/DIN1 (and2s2)                      0.21      0.00       9.46 f
+  U2241/Q (and2s2)                         0.11      0.16       9.61 f
+  n2393 (net)                    2                   0.00       9.61 f
+  U2615/DIN2 (oai21s3)                     0.11      0.00       9.62 f
+  U2615/Q (oai21s3)                        0.38      0.12       9.73 r
+  n2389 (net)                    2                   0.00       9.73 r
+  U2614/DIN2 (aoi21s3)                     0.38      0.00       9.74 r
+  U2614/Q (aoi21s3)                        0.30      0.15       9.89 f
+  n2384 (net)                    2                   0.00       9.89 f
+  U255/DIN2 (oai21s2)                      0.30      0.00       9.89 f
+  U255/Q (oai21s2)                         0.39      0.16      10.05 r
+  n2380 (net)                    2                   0.00      10.05 r
+  U2272/DIN1 (nnd2s1)                      0.39      0.00      10.05 r
+  U2272/Q (nnd2s1)                         0.19      0.07      10.12 f
+  n2290 (net)                    1                   0.00      10.12 f
+  U2273/DIN1 (nnd2s1)                      0.19      0.00      10.12 f
+  U2273/Q (nnd2s1)                         0.23      0.10      10.22 r
+  n2367 (net)                    2                   0.00      10.22 r
+  U2282/DIN1 (nnd2s1)                      0.23      0.00      10.22 r
+  U2282/Q (nnd2s1)                         0.15      0.07      10.29 f
+  n2316 (net)                    1                   0.00      10.29 f
+  U2284/DIN1 (nnd2s1)                      0.15      0.00      10.29 f
+  U2284/Q (nnd2s1)                         0.23      0.09      10.38 r
+  n2670 (net)                    2                   0.00      10.38 r
+  U2291/DIN1 (nnd2s1)                      0.23      0.00      10.38 r
+  U2291/Q (nnd2s1)                         0.15      0.06      10.45 f
+  n2337 (net)                    1                   0.00      10.45 f
+  U2293/DIN1 (nnd2s1)                      0.15      0.00      10.45 f
+  U2293/Q (nnd2s1)                         0.23      0.09      10.54 r
+  n2372 (net)                    2                   0.00      10.54 r
+  U2298/DIN1 (nnd2s1)                      0.23      0.00      10.55 r
+  U2298/Q (nnd2s1)                         0.15      0.07      10.61 f
+  n2352 (net)                    1                   0.00      10.61 f
+  U2300/DIN1 (nnd2s1)                      0.15      0.00      10.61 f
+  U2300/Q (nnd2s1)                         0.23      0.09      10.71 r
+  n2376 (net)                    2                   0.00      10.71 r
+  U2304/DIN1 (nnd2s1)                      0.23      0.00      10.71 r
+  U2304/Q (nnd2s1)                         0.15      0.06      10.77 f
+  n2361 (net)                    1                   0.00      10.77 f
+  U2305/DIN1 (nnd2s1)                      0.15      0.00      10.77 f
+  U2305/Q (nnd2s1)                         0.20      0.08      10.85 r
+  n2362 (net)                    1                   0.00      10.85 r
+  U2306/DIN2 (xor2s1)                      0.20      0.00      10.85 r
+  U2306/Q (xor2s1)                         0.16      0.14      10.99 f
+  product_sum[63] (net)          1                   0.00      10.99 f
+  product_sum[63] (out)                    0.16      0.00      10.99 f
+  data arrival time                                            10.99
+
+  max_delay                                         11.00      11.00
+  output external delay                              0.00      11.00
+  data required time                                           11.00
+  ---------------------------------------------------------------------
+  data required time                                           11.00
+  data arrival time                                           -10.99
+  ---------------------------------------------------------------------
+  slack (MET)                                                   0.01
+
+
+1
+ 
+****************************************
+Report : constraint
+        -verbose
+        -max_delay
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 23:13:30 2024
+****************************************
+
+
+  Startpoint: mcand[4] (input port)
+  Endpoint: product_sum[63]
+            (output port)
+  Path Group: default
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  mult_stage_comb    tsmcwire              lec25dscc25_TT
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  input external delay                     0.00       0.00 f
+  mcand[4] (in)                            0.00       0.00 f
+  U147/Q (xnr2s1)                          0.38       0.38 f
+  U2671/Q (ib1s6)                          0.08       0.46 r
+  U1591/Q (and2s2)                         0.24       0.70 r
+  U1791/Q (aoi222s1)                       0.22       0.92 f
+  U1792/Q (oai21s1)                        0.21       1.12 r
+  U1793/Q (xor2s1)                         0.21       1.33 f
+  U1841/Q (xor2s1)                         0.23       1.56 r
+  U1842/Q (xor2s1)                         0.24       1.80 r
+  U1843/Q (nor2s1)                         0.12       1.92 f
+  U1845/Q (oai21s1)                        0.19       2.11 r
+  U1846/Q (nnd2s1)                         0.06       2.17 f
+  U189/Q (and2s1)                          0.22       2.39 f
+  U1848/Q (nor2s1)                         0.07       2.46 r
+  U279/Q (or2s1)                           0.15       2.61 r
+  U403/Q (aoi21s1)                         0.18       2.78 f
+  U2612/Q (oai21s2)                        0.17       2.95 r
+  U1864/Q (nnd2s1)                         0.06       3.02 f
+  U105/Q (and2s1)                          0.22       3.24 f
+  U1874/Q (oai211s2)                       0.18       3.41 r
+  U1927/Q (aoi21s1)                        0.18       3.59 f
+  U2065/Q (oai21s1)                        0.20       3.80 r
+  U2179/Q (aoi21s1)                        0.18       3.98 f
+  U2181/Q (oai21s1)                        0.20       4.18 r
+  U2185/Q (nnd2s1)                         0.07       4.25 f
+  U104/Q (and2s1)                          0.22       4.47 f
+  U163/Q (nor2s1)                          0.07       4.54 r
+  U162/Q (or2s1)                           0.16       4.70 r
+  U2188/Q (aoi21s1)                        0.18       4.87 f
+  U161/Q (oai21s2)                         0.16       5.04 r
+  U2193/Q (nnd2s1)                         0.09       5.13 f
+  U2195/Q (and2s2)                         0.15       5.28 f
+  U160/Q (nor2s1)                          0.06       5.34 r
+  U159/Q (or2s1)                           0.17       5.51 r
+  U158/Q (aoi21s2)                         0.16       5.66 f
+  U157/Q (oai21s2)                         0.16       5.82 r
+  U2201/Q (nnd2s1)                         0.09       5.91 f
+  U2203/Q (and2s2)                         0.15       6.06 f
+  U156/Q (nor2s1)                          0.06       6.12 r
+  U155/Q (or2s1)                           0.17       6.29 r
+  U154/Q (aoi21s2)                         0.16       6.44 f
+  U265/Q (oai21s2)                         0.16       6.60 r
+  U2209/Q (nnd2s1)                         0.09       6.69 f
+  U2211/Q (and2s2)                         0.15       6.84 f
+  U264/Q (nor2s1)                          0.06       6.90 r
+  U96/Q (or2s1)                            0.17       7.07 r
+  U263/Q (aoi21s2)                         0.16       7.23 f
+  U262/Q (oai21s2)                         0.16       7.38 r
+  U2217/Q (nnd2s1)                         0.09       7.48 f
+  U2219/Q (and2s2)                         0.15       7.63 f
+  U92/Q (nor2s1)                           0.06       7.69 r
+  U2628/Q (or2s1)                          0.17       7.85 r
+  U261/Q (aoi21s2)                         0.16       8.01 f
+  U260/Q (oai21s2)                         0.16       8.16 r
+  U2225/Q (nnd2s1)                         0.06       8.23 f
+  U97/Q (and2s1)                           0.22       8.44 f
+  U93/Q (nor2s1)                           0.07       8.51 r
+  U2630/Q (or2s1)                          0.17       8.68 r
+  U259/Q (aoi21s2)                         0.16       8.83 f
+  U258/Q (oai21s2)                         0.16       8.99 r
+  U2232/Q (nnd2s1)                         0.09       9.08 f
+  U2234/Q (and2s2)                         0.15       9.23 f
+  U257/Q (oai21s2)                         0.13       9.36 r
+  U2239/Q (nnd2s1)                         0.09       9.45 f
+  U2241/Q (and2s2)                         0.16       9.61 f
+  U2615/Q (oai21s3)                        0.12       9.73 r
+  U2614/Q (aoi21s3)                        0.16       9.89 f
+  U255/Q (oai21s2)                         0.16      10.05 r
+  U2272/Q (nnd2s1)                         0.08      10.12 f
+  U2273/Q (nnd2s1)                         0.10      10.22 r
+  U2282/Q (nnd2s1)                         0.07      10.29 f
+  U2284/Q (nnd2s1)                         0.09      10.38 r
+  U2291/Q (nnd2s1)                         0.07      10.45 f
+  U2293/Q (nnd2s1)                         0.09      10.54 r
+  U2298/Q (nnd2s1)                         0.07      10.61 f
+  U2300/Q (nnd2s1)                         0.09      10.71 r
+  U2304/Q (nnd2s1)                         0.07      10.77 f
+  U2305/Q (nnd2s1)                         0.08      10.85 r
+  U2306/Q (xor2s1)                         0.14      10.99 f
+  product_sum[63] (out)                    0.00      10.99 f
+  data arrival time                                  10.99
+
+  max_delay                               11.00      11.00
+  output external delay                    0.00      11.00
+  data required time                                 11.00
+  -----------------------------------------------------------
+  data required time                                 11.00
+  data arrival time                                 -10.99
+  -----------------------------------------------------------
+  slack (MET)                                         0.01
+
+
+1
+ 
+****************************************
+Report : resources
+Design : mult_stage_comb
+Version: V-2023.12-SP5
+Date   : Fri Nov 29 23:13:30 2024
+****************************************
+
+
+Resource Report for this hierarchy in file ../verilog/mult_stage_comb.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| DP_OP_5J1_122_5202              |            |                            |
+|                | DP_OP_5J1_122_5202 |        |                            |
+=============================================================================
+
+Datapath Report for DP_OP_5J1_122_5202
+==============================================================================
+| Cell                 | Contained Operations                                |
+==============================================================================
+| DP_OP_5J1_122_5202   | mult_18 (mult_stage_comb.sv:18)                     |
+|                      | add_21 (mult_stage_comb.sv:21)                      |
+==============================================================================
+
+==============================================================================
+|       |      | Data     |       |                                          |
+| Var   | Type | Class    | Width | Expression                               |
+==============================================================================
+| I1    | PI   | Unsigned | 16    |                                          |
+| I2    | PI   | Unsigned | 64    |                                          |
+| I3    | PI   | Unsigned | 64    |                                          |
+| T0    | IFO  | Unsigned | 64    | I1 * I2 (mult_stage_comb.sv:18)          |
+| O1    | PO   | Unsigned | 64    | I3 + T0 (mult_stage_comb.sv:21)          |
+==============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| DP_OP_5J1_122_5202 | DP_OP_5J1_122_5202 | str (area,speed) |                |
+|                    |                  | mult_arch: benc_radix8              |
+===============================================================================
+
+1
