@@ -5,6 +5,21 @@
 `ifndef SHADOW_SKEW
     `define SHADOW_SKEW       1.8
 `endif
+class GaussianNum;
+
+  int seed = 1;
+  int mean = 256;
+  int std_deviation = 65536;
+  rand bit[31:0] rand_value;
+
+  function int gaussian_dist (int seed);
+    return $dist_normal (seed, mean, std_deviation);
+  endfunction
+
+  constraint c_value { rand_value == gaussian_dist (seed); }
+
+endclass
+
 module test_mult();
 
     logic is_FAIL;
@@ -107,14 +122,69 @@ module test_mult();
     end
 
     integer i;
+    logic [63:0] test_in_A;
+    logic [63:0] test_in_B;
+    int mean_index = 16;
+/*
+    int seed = 1;
+    int mean = 1 << 16;
+    int std_deviation = 65536;
+    int rand_num;
+*/
+    int file_A;
+    int file_B;
+    longint read_A;
+    longint read_B;
     initial begin
+    	//GaussianNum gaussian_gen = new();
+	//gaussian_gen.rand_value.rand_mode(1);
         mcand  = 0;
         mplier = 0;
         in_vld = 1'b0;
         @(posedge rst_n);
         #0.1;
+        file_A = $fopen("/home/cassiesu/Razor_mult/test/ran_A_chi.txt", "r");
+        if (file_A == 0) begin
+            $display("Error: Unable to open file.");
+            $finish;
+        end
+        file_B = $fopen("/home/cassiesu/Razor_mult/test/ran_B_chi.txt", "r");
+        if (file_B == 0) begin
+            $display("Error: Unable to open file.");
+            $finish;
+        end
         for(i=0;i<10000;i=i+1) begin
-            feed({$random(),$random()},{$random(),$random()});
+            /*
+            rand_num  = $dist_normal($random(), mean, std_deviation);
+            rand_num  = (rand_num >= 0) ? rand_num : 0;
+            test_in_A = {32'b0,rand_num};
+            rand_num  = $dist_normal($random(), mean, std_deviation);
+            rand_num  = (rand_num >= 0) ? rand_num : 0;
+            test_in_B = {32'b0,rand_num};
+            if(mean_index >= 16)begin
+                test_in_A = test_in_A << (mean_index - 16);
+                test_in_B = test_in_B << (mean_index - 16);
+            end
+            else begin
+                test_in_A = test_in_A >> (16 - mean_index);
+                test_in_B = test_in_B >> (16 - mean_index);
+            end
+            test_in_A = (test_in_A >= 1) ? test_in_A : 1;
+            test_in_B = {32'b0,$random()};
+            */
+            if (!$feof(file_A)) begin
+                if ($fscanf(file_A, "%u\n", read_A) == 1) begin
+      	            test_in_A = read_A;
+	        end
+            end else
+                $display("Error: can't read test_in_A.");
+            if (!$feof(file_B)) begin
+                if ($fscanf(file_B, "%u\n", read_B) == 1) begin
+      	            test_in_B = read_B;
+	        end
+            end else
+                $display("Error: can't read test_in_B.");
+            feed(test_in_A,test_in_B);
             if(i%1000 == 999)
                 $display("1000 cases Passed");
         end
@@ -129,6 +199,8 @@ module test_mult();
         //         $display("1000 cases Passed");
         // end
         #40;
+        $fclose(file_A);
+        $fclose(file_B);
         $fclose(feed_file);
         $fclose(compare_file);
         $finish();
