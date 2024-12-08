@@ -132,15 +132,17 @@ module test_mult();
     int rand_num;
 */
     int file_A;
-    int file_B1;
-    int file_B2;
-    int file_B3;
-    int file_B4;
+    int file_B;
+    //int file_B1;
+    //int file_B2;
+    //int file_B3;
+    //int file_B4;
     longint read_A;
-    bit[15:0] read_B1;
-    bit[15:0] read_B2;
-    bit[15:0] read_B3;
-    bit[15:0] read_B4;
+    longint read_B;
+    //bit[15:0] read_B1;
+    //bit[15:0] read_B2;
+    //bit[15:0] read_B3;
+    //bit[15:0] read_B4;
     initial begin
     	//GaussianNum gaussian_gen = new();
 	//gaussian_gen.rand_value.rand_mode(1);
@@ -154,6 +156,12 @@ module test_mult();
             $display("Error: Unable to open file.");
             $finish;
         end
+        file_B = $fopen("/home/cassiesu/Razor_mult/test/B.txt", "r");
+        if (file_B == 0) begin
+            $display("Error: Unable to open file.");
+            $finish;
+        end
+        /*
         file_B1 = $fopen("/home/cassiesu/Razor_mult/test/B1.txt", "r");
         if (file_B1 == 0) begin
             $display("Error: Unable to open file.");
@@ -174,6 +182,7 @@ module test_mult();
             $display("Error: Unable to open file.");
             $finish;
         end
+*/
         for(i=0;i<10000;i=i+1) begin
             /*
             rand_num  = $dist_normal($random(), mean, std_deviation);
@@ -198,16 +207,23 @@ module test_mult();
       	            test_in_A = read_A;
 	        end
             end else
-                $display("Error: can't read test_in_A.");
-            if (!$feof(file_B1) & !$feof(file_B2) & !$feof(file_B3) & !$feof(file_B4)) begin
-                if (($fscanf(file_B1, "%d\n", read_B1) == 1)
-                   & ($fscanf(file_B2, "%d\n", read_B2) == 1)
-                   & ($fscanf(file_B3, "%d\n", read_B3) == 1)
-                   & ($fscanf(file_B4, "%d\n", read_B4) == 1)) begin
-      	            test_in_B = {read_B1,read_B2,read_B3,read_B4};
+                $display("Error: can't read test_in_B.");
+            if (!$feof(file_B)) begin
+                if ($fscanf(file_B, "%d\n", read_B) == 1) begin
+      	            test_in_B = read_B;
 	        end
             end else
                 $display("Error: can't read test_in_B.");
+            //if (!$feof(file_B1) & !$feof(file_B2) & !$feof(file_B3) & !$feof(file_B4)) begin
+            //    if (($fscanf(file_B1, "%d\n", read_B1) == 1)
+            //       & ($fscanf(file_B2, "%d\n", read_B2) == 1)
+            //       & ($fscanf(file_B3, "%d\n", read_B3) == 1)
+            //       & ($fscanf(file_B4, "%d\n", read_B4) == 1)) begin
+      	    //        test_in_B = {read_B1,read_B2,read_B3,read_B4};
+	    //    end
+            //end else
+            //    $display("Error: can't read test_in_B.");
+            //feed({$random(),$random()},{$random(),$random()});
             feed(test_in_A,test_in_B);
             if(i%1000 == 999)
                 $display("1000 cases Passed");
@@ -224,10 +240,11 @@ module test_mult();
         // end
         #40;
         $fclose(file_A);
-        $fclose(file_B1);
-        $fclose(file_B2);
-        $fclose(file_B3);
-        $fclose(file_B4);
+        $fclose(file_B);
+        //$fclose(file_B1);
+        //$fclose(file_B2);
+        //$fclose(file_B3);
+        //$fclose(file_B4);
         $fclose(feed_file);
         $fclose(compare_file);
         $finish();
